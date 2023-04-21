@@ -1,10 +1,13 @@
 <template>
-    <div>
-        Producten
-    </div>
 
-    <div class="products-list">
-        <Product v-for="product in products" :key="product.id" :product="product" />
+    <div class="container">
+        <h1>
+            Producten
+        </h1>
+    
+        <div class="products-list">
+            <Product v-for="product in products" :key="product.id" :product="product" />
+        </div>
     </div>
 </template>
   
@@ -41,4 +44,19 @@ export default {
     },
 }
 </script>
-  
+
+
+<style scoped lang="scss">
+
+.container{
+    max-width: 60vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.products-list{
+    display: flex;
+    flex-wrap: wrap;
+    max-width: 50vw;
+}
+</style>  
