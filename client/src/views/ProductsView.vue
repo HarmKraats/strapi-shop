@@ -1,14 +1,16 @@
 <template>
-
     <div class="container">
         <h1>
-            Producten
+            Alle oorbellen
         </h1>
-    
+
         <div class="products-list">
-            <Product v-for="product in products" :key="product.id" :product="product" />
+            <Product v-for="product in products" :key="product.id"
+                :product="product" />
         </div>
     </div>
+
+
 </template>
   
 <script>
@@ -33,9 +35,10 @@ export default {
     methods: {
         async getProducts() {
 
-            await api.get('/api/products')
+            await api.get('/api/products?populate=productImage')
                 .then((response) => {
                     this.products = response.data.data
+                    console.log(response)
                 })
                 .catch((error) => {
                     console.log(error)
@@ -47,16 +50,28 @@ export default {
 
 
 <style scoped lang="scss">
-
-.container{
+.container {
     max-width: 60vw;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    margin: 0 auto;
 }
-.products-list{
-    display: flex;
-    flex-wrap: wrap;
-    max-width: 50vw;
+
+.products-list {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-column-gap: 2rem;
+    grid-row-gap: 2rem;
+}
+
+
+// make container responsive
+@media screen and (max-width: 768px) {
+    .container {
+        max-width: 90vw;
+    }
+
+    .products-list {
+        grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+        width: 90vw;
+    }
 }
 </style>  
