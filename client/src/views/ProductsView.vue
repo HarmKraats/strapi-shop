@@ -20,7 +20,7 @@ import Product from '@/components/Product.vue'
 import api from '@/api.js'
 
 export default {
-    name: 'HomeView',
+    name: 'ShopView',
     components: {
         Product
     },

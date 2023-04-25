@@ -65,6 +65,53 @@
 </template>
 
 
+
+<script>
+import api from '@/api.js'
+
+
+export default {
+
+    name: 'ProductDetail',
+
+    data() {
+        return {
+            id: this.$route.params.id,
+            product: [],
+            productImage: [],
+            productImageLarge: []
+        }
+    },
+    created() {
+        // fetch all the data from the url
+        this.getProduct()
+    },
+    methods: {
+        async getProduct() {
+
+            await api.get(`/api/products/${this.id}?populate=productImage`)
+                .then((response) => {
+                    this.product = response.data.data.attributes
+                    this.productImage = response.data.data.attributes.productImage.data[0].attributes.formats.medium.url
+                    this.productImageLarge = response.data.data.attributes.productImage.data[0].attributes.formats.large.url
+                    // console.log( response.data.data)
+                })
+                .catch((error) => {
+                    console.log(error)
+                })
+        },
+
+        goBack() {
+            // go to products view
+            this.$router.push({ name: 'shop' })
+        }
+    }
+}
+
+
+</script>
+
+
 <style scoped lang="scss">
 .product-wrapper {
     display: flex;
@@ -227,50 +274,3 @@
 
 }
 </style>
-
-
-
-<script>
-import api from '@/api.js'
-
-
-export default {
-
-    name: 'ProductDetail',
-
-    data() {
-        return {
-            id: this.$route.params.id,
-            product: [],
-            productImage: [],
-            productImageLarge: []
-        }
-    },
-    created() {
-        // fetch all the data from the url
-        this.getProduct()
-    },
-    methods: {
-        async getProduct() {
-
-            await api.get(`/api/products/${this.id}?populate=productImage`)
-                .then((response) => {
-                    this.product = response.data.data.attributes
-                    this.productImage = response.data.data.attributes.productImage.data[0].attributes.formats.medium.url
-                    this.productImageLarge = response.data.data.attributes.productImage.data[0].attributes.formats.large.url
-                    // console.log( response.data.data)
-                })
-                .catch((error) => {
-                    console.log(error)
-                })
-        },
-
-        goBack() {
-            // go to products view
-            this.$router.push({ name: 'products' })
-        }
-    }
-}
-
-
-</script>
