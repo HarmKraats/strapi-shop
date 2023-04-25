@@ -38,7 +38,7 @@ export default {
             await api.get('/api/products?populate=productImage')
                 .then((response) => {
                     this.products = response.data.data
-                    console.log(response)
+                    // console.log(response)
                 })
                 .catch((error) => {
                     console.log(error)

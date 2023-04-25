@@ -1,16 +1,14 @@
 <template>
-    <div class="product">
+    <div class="product" @click="navigateToProductDetails">
         <img :src="'http://localhost:1337' + product.attributes.productImage.data[0].attributes.formats.small.url"
             alt="product image">
         <div class="product-inner">
             <h3>{{ product.attributes.productName }}</h3>
             <span class="product-price">
-                Prijs: &#8364;{{ product.attributes.productPrice }}
+                Prijs: <span class="price">&#8364;{{ product.attributes.productPrice }}</span>
             </span>
         </div>
     </div>
-
-    
 </template>
 
   
@@ -26,6 +24,11 @@ export default {
     created() {
         // console.log(this.product.attributes.productImage.data);
     },
+    methods: {
+        navigateToProductDetails() {
+            this.$router.push({ name: 'productDetails', params: { id: this.product.id } })
+        }
+    }
 }
 
 </script>
@@ -66,11 +69,14 @@ export default {
     }
 
     .product-price {
-        font-weight: bold;
         width: 100%;
         display: block;
         text-align: start;
-        color: #A0B8A5;
+
+        .price {
+            font-weight: bold;
+            color: #A0B8A5;
+        }
     }
 
 

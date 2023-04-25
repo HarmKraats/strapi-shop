@@ -20,6 +20,28 @@ const routes = [
     name: 'products',
     component: () => import('../views/ProductsView.vue')
   },
+  // A route for the product details page. like products/this-product
+    {
+      path: '/product/:id',
+      name: 'productDetails',
+      component: () => import('../views/ProductView.vue'),
+    },
+  // {
+  //   path: '/cart',
+  //   name: 'cart',
+  //   component: () => import('../views/CartView.vue')
+  // },
+  // {
+  //   path: '/checkout',
+  //   name: 'checkout',
+  //   component: () => import('../views/CheckoutView.vue')
+  // },
+  {
+    path: '/:pathMatch(.*)*',
+    name: 'not-found',
+    component: () => import('../views/NotFoundView.vue')
+  }
+
 ]
 
 const router = createRouter({

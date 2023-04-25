@@ -24,12 +24,16 @@
       "type": "decimal"
     },
     "productImage": {
+      "type": "media",
+      "multiple": true,
+      "required": false,
       "allowedTypes": [
         "images",
         "videos"
-      ],
-      "type": "media",
-      "multiple": true
+      ]
+    },
+    "productOldPrice": {
+      "type": "decimal"
     }
   }
 }
