@@ -7,8 +7,8 @@
     <div class="links">
       <router-link to="/shop">Shop</router-link>
       <router-link to="/over">Over</router-link>
-      <router-link to="/">Contact</router-link>
-      <router-link to="/">Mandje</router-link>
+      <router-link to="/blog">Blog</router-link>
+      <!-- <router-link to="/">Mandje</router-link> -->
     </div>
   </nav>
   <router-view />
