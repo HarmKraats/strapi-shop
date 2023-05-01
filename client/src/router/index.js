@@ -19,7 +19,7 @@ const routes = [
   },
   // A route for the product details page. like products/this-product
   {
-    path: '/product/:id',
+    path: '/shop/:slug',
     name: 'productDetails',
     component: () => import('../views/ProductView.vue'),
   },

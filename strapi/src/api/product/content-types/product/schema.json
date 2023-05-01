@@ -34,6 +34,10 @@
     },
     "productOldPrice": {
       "type": "decimal"
+    },
+    "Slug": {
+      "type": "uid",
+      "targetField": "productName"
     }
   }
 }

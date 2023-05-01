@@ -1,35 +1,36 @@
 <template>
-    <div class="product" @click="navigateToProductDetails">
-        <img :src="'http://localhost:1337' + product.attributes.productImage.data[0].attributes.formats.small.url"
-            alt="product image">
-        <div class="product-inner">
-            <h3>{{ product.attributes.productName }}</h3>
-            <div class="product-inner-inner">
-                <span class="product-price">
-                    Prijs: <span class="price">&#8364;{{
-                        product.attributes.productPrice }}</span>
-                </span>
-                <div class="buttons-wrapper">
-                    <div class="button button__add">
-                        <button @click="addToCard">In mandje</button>
-                    </div>
-                    <div class="button button__love">
-                        <button>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="25"
-                                height="23" viewBox="0 0 25 23">
-                                <g id="heart-fill" transform="translate(-0.001 0)">
-                                    <path id="Path_30" data-name="Path 30"
-                                        d="M12.5,2.015c6.935-7,24.272,5.245,0,20.985C-11.772,7.262,5.566-4.98,12.5,2.015Z"
-                                        transform="translate(0 0)" fill="#fff"
-                                        fill-rule="evenodd" />
-                                </g>
-                            </svg>
-                        </button>
+        <div class="product" @click="navigateToProductDetails">
+            <img :src="'http://localhost:1337' + product.attributes.productImage.data[0].attributes.formats.small.url"
+                alt="product image">
+            <div class="product-inner">
+                <h3>{{ product.attributes.productName }}</h3>
+                <div class="product-inner-inner">
+                    <span class="product-price">
+                        Prijs: <span class="price">&#8364;{{
+                            product.attributes.productPrice }}</span>
+                    </span>
+                    <div class="buttons-wrapper">
+                        <div class="button button__add">
+                            <button @click="addToCard">In mandje</button>
+                        </div>
+                        <div class="button button__love">
+                            <button>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="25"
+                                    height="23" viewBox="0 0 25 23">
+                                    <g id="heart-fill"
+                                        transform="translate(-0.001 0)">
+                                        <path id="Path_30" data-name="Path 30"
+                                            d="M12.5,2.015c6.935-7,24.272,5.245,0,20.985C-11.772,7.262,5.566-4.98,12.5,2.015Z"
+                                            transform="translate(0 0)" fill="#fff"
+                                            fill-rule="evenodd" />
+                                    </g>
+                                </svg>
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 </template>
 
   
@@ -43,12 +44,19 @@ export default {
     props: {
         product: Object
     },
+    data() {
+        return {
+            slug: '',
+        }
+    },
     created() {
-        // console.log(this.product.attributes.productImage.data);
+        this.slug = this.product.attributes.Slug
+        // console.log(this.product);
+        
     },
     methods: {
         navigateToProductDetails() {
-            this.$router.push({ name: 'productDetails', params: { id: this.product.id } })
+            this.$router.push({ name: 'productDetails', params: { slug: this.slug } })
         },
         addToCard(event) {
             // prevent default

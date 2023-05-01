@@ -32,7 +32,7 @@ export default {
         return {
             id: this.$route.params.id,
             blog: [],
-            slugUrl: this.$route.params.slug
+            slug: this.$route.params.slug
         }
     },
     async created() {
@@ -42,7 +42,12 @@ export default {
     methods: {
         async getBlog() {
 
-            await api.get(`/api/blog-posts?urlSlug=${this.urlSlug}`)
+            // await api.get(`/api/blog-posts?urlSlug=${this.urlSlug}`)
+            await api.get(`/api/blog-posts`, {
+                params: {
+                    'filters[Slug][$eq]': this.slug,
+                }
+            })
                 .then((response) => {
                     this.blog = response.data.data[0].attributes
                     // console.log( response.data.data[0].attributes)

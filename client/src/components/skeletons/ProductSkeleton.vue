@@ -31,7 +31,6 @@
     transition: .2s ease-in-out;
     overflow: hidden;
     min-height: 300px;
-    ;
     max-height: 100%;
 
     .img {

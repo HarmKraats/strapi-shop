@@ -4,7 +4,7 @@
             Alle oorbellen
         </h1>
 
-        <div class="products-list">
+        <div class="products-list" v-auto-animate>
             <ProductSkeleton v-if="loading" v-for="index in 4" :key="index" />
             <Product v-else v-for="product in products" :key="product.id"
                 :product="product" />
@@ -15,7 +15,7 @@
 <script>
 // @ is an alias to /src
 import Product from '@/components/Product.vue'
-import ProductSkeleton from '@/components/ProductSkeleton.vue'
+import ProductSkeleton from '@/components/skeletons/ProductSkeleton.vue'
 // get the api var from main,js
 import api from '@/api.js'
 

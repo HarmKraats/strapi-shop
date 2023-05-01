@@ -14,7 +14,16 @@
       <!-- <router-link to="/">Mandje</router-link> -->
     </div>
   </nav>
+
   <router-view />
+
+  <!-- <footer class="footer">
+    <ul>
+      <li>Copyright © 2023 CLAYCO</li>
+      <li>Met liefde & zorg handgemaakt</li>
+      <li>wenlivandieren@gmail.com</li>
+    </ul>
+  </footer> -->
 </template>
 
 <style lang="scss">
@@ -41,7 +50,7 @@ body {
 }
 
 .container {
-    max-width: var(--container-width);
+    width: var(--container-width);
     margin: 0 auto;
 }
 
@@ -69,6 +78,12 @@ nav {
   width: var(--container-width);
   padding: 2rem 0;
 
+  .logo{
+    img{
+      width: 8rem;
+    }
+  }
+
 
   .links {
     display: flex;
@@ -84,6 +99,10 @@ nav {
     }
 
   }
+
+}
+
+footer{
 
 }
 </style>
