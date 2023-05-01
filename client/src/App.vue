@@ -17,6 +17,10 @@
 <style lang="scss">
 @import url('https://fonts.googleapis.com/css2?family=Baskervville:ital@0;1&family=IBM+Plex+Serif:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap');
 
+
+:root{
+  --container-width: 70vw;
+}
 body {
   background-color: #F8F7F5;
   // font-family: 'Baskervville', serif;
@@ -33,18 +37,11 @@ body {
   align-items: center;
 }
 
-// nav {
-//   padding: 30px;
+.container {
+    max-width: var(--container-width);
+    margin: 0 auto;
+}
 
-//   a {
-//     font-weight: bold;
-//     color: #2c3e50;
-
-//     &.router-link-exact-active {
-//       color: #42b983;
-//     }
-//   }
-// }
 button {
   width: 100%;
   height: 100%;
@@ -66,10 +63,9 @@ nav {
   font-family: 'IBM Plex Serif', serif;
   display: flex;
   justify-content: space-between;
-  width: 60vw;
+  width: var(--container-width);
   padding: 2rem 0;
 
-  .logo {}
 
   .links {
     display: flex;

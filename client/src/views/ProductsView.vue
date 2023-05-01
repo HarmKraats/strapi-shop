@@ -50,10 +50,6 @@ export default {
 
 
 <style scoped lang="scss">
-.container {
-    max-width: 60vw;
-    margin: 0 auto;
-}
 
 .products-list {
     display: grid;
