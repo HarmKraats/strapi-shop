@@ -10,7 +10,7 @@
       <router-link to="/shop">Shop</router-link>
       <router-link to="/over">Over</router-link>
       <router-link to="/blog">Blog</router-link>
-      <a href="#">Mandje</a>
+      <router-link to="/cart">Mandje - {{ this.$store.state.cart.length }}</router-link>
       <!-- <router-link to="/">Mandje</router-link> -->
     </div>
   </nav>
@@ -25,6 +25,15 @@
     </ul>
   </footer> -->
 </template>
+
+<script>
+
+export default {
+  name: 'App',
+  
+}
+
+</script>
 
 <style lang="scss">
 @import url('https://fonts.googleapis.com/css2?family=Baskervville:ital@0;1&family=IBM+Plex+Serif:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap');

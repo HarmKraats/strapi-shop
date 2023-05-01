@@ -37,7 +37,6 @@
   
 
 <script>
-import store from '@/store'
 
 export default {
     name: 'Product',
@@ -59,9 +58,7 @@ export default {
             this.$router.push({ name: 'productDetails', params: { slug: this.slug } })
         },
         addToCard(event) {
-            // prevent default
-            // event.stopPropagation()
-            // console.log('add to cart')
+            event.stopPropagation()
             this.$store.dispatch('addToCart', this.product)
         }
     }

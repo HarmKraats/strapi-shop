@@ -1,4 +1,4 @@
-import { createRouter, createWebHashHistory, createWebHistory  } from 'vue-router'
+import { createRouter, createWebHashHistory, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 
 const routes = [
@@ -34,11 +34,12 @@ const routes = [
     component: () => import('../views/BlogView.vue'),
     props: true,
   },
-  // {
-  //   path: '/cart',
-  //   name: 'cart',
-  //   component: () => import('../views/CartView.vue')
-  // },
+  {
+    path: '/cart',
+    name: 'cart',
+    component: () => import('../views/CartView.vue')
+  },
+
   // {
   //   path: '/checkout',
   //   name: 'checkout',

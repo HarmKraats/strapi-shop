@@ -1,10 +1,10 @@
 // store.js
 
-
 import Vuex from 'vuex'
 
-
 // Vue.use(Vuex)
+
+const CART_KEY = 'cart'
 
 export default new Vuex.Store({
   state: {
@@ -13,12 +13,21 @@ export default new Vuex.Store({
   mutations: {
     addToCart(state, product) {
       state.cart.push(product)
+      localStorage.setItem(CART_KEY, JSON.stringify(state.cart))
     },
     removeFromCart(state, productId) {
       state.cart = state.cart.filter(item => item.id !== productId)
+      localStorage.setItem(CART_KEY, JSON.stringify(state.cart))
     },
     clearCart(state) {
       state.cart = []
+      localStorage.removeItem(CART_KEY)
+    },
+    initializeStore(state) {
+      const cartData = localStorage.getItem(CART_KEY)
+      if (cartData) {
+        state.cart = JSON.parse(cartData)
+      }
     }
   },
   actions: {
@@ -30,6 +39,9 @@ export default new Vuex.Store({
     },
     clearCart(context) {
       context.commit('clearCart')
+    },
+    initializeStore(context) {
+      context.commit('initializeStore')
     }
   },
   getters: {
@@ -37,7 +49,10 @@ export default new Vuex.Store({
       return state.cart.length
     },
     cartTotalPrice(state) {
-      return state.cart.reduce((total, item) => total + item.price, 0)
+      return state.cart.reduce((total, item) => total + item.attributes.productPrice, 0)
     }
+  },
+  created() {
+    this.$store.dispatch('initializeStore')
   }
 })

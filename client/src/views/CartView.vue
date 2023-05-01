@@ -1,40 +1,30 @@
-// Cart.vue
-
 <template>
-  <div class="cart">
-    <div class="cart-item" v-for="item in cart" :key="item.id">
-      <div class="cart-item-image">
-        <img :src="item.image" :alt="item.name">
-      </div>
-      <div class="cart-item-details">
-        <div class="cart-item-name">{{ item.name }}</div>
-        <div class="cart-item-price">&#8364;{{ item.price }}</div>
-      </div>
-      <div class="cart-item-remove">
-        <button @click="removeFromCart(item.id)">Remove</button>
-      </div>
-    </div>
-    <div class="cart-total">
-      Total price: &#8364;{{ total }}
-    </div>
-    </div>
+  <div>
+    <h2>Cart</h2>
+    <ul>
+      <li v-for="item in cart" :key="item.id">
+        {{ item.attributes.productName }} - {{ item.attributes.productPrice }}
+      </li>
+    </ul>
+    <p>Total: {{ total }}</p>
+  </div>
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 export default {
-  name: 'Cart',
   computed: {
+    ...mapGetters(['cartTotalPrice']),
     cart() {
       return this.$store.state.cart
     },
     total() {
-      return this.$store.getters.total
+      return this.cartTotalPrice
     }
   },
-  methods: {
-    removeFromCart(id) {
-      this.$store.dispatch('removeFromCart', id)
-    }
+  created() {
+    this.cart = this.$store.state.cart
   }
 }
 </script>

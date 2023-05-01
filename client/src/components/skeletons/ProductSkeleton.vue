@@ -24,6 +24,19 @@
 
 
 <style scoped lang="scss">
+
+// small fade blink animation
+@keyframes blink {
+    0% {
+        opacity: .5;
+    }
+    50% {
+        opacity: 1;
+    }
+    100% {
+        opacity: .5;
+    }
+}
 .product {
     background-color: #fff;
     border-radius: 10px;
@@ -32,6 +45,8 @@
     overflow: hidden;
     min-height: 300px;
     max-height: 100%;
+    animation: blink infinite ease-in-out 1.3s;
+    
 
     .img {
         transition: .2s ease-in-out;

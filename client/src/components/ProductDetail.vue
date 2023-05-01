@@ -46,7 +46,7 @@
                 </div>
                 <div class="buttons-wrapper">
                     <div class="button button__add">
-                        <button>Toevoegen aan winkelmandje</button>
+                        <button @click="addToCard">Toevoegen aan winkelmandje</button>
                     </div>
                     <div class="button button__love">
                         <button>
@@ -123,40 +123,10 @@ export default {
             }
         },
 
-        // async getProduct() {
-        //     console.log(this.slug);
-
-        //     // await api.get(`/api/products/${this.id}?populate=productImage`)
-        //     // await api.get('/api/products?filters[Slug]='+this.slug+'&populate=productImage')
-        //     await api.get(`/api/products`, {
-        //         params: {
-        //             'filters[Slug]': this.slug,
-        //             'populate': 'productImage'
-        //         }
-        //     })
-        //         .then((response) => {
-        //             this.product = response.data.data[0].attributes
-        //             // this.productImage = response.data.data.attributes.productImage.data[0].attributes.formats.medium.url
-        //             // this.productImageLarge = response.data.data.attributes.productImage.data[0].attributes.formats.large.url
-        //             // // console.log(response.data.data.attributes)
-
-        //             this.productImages = this.product.productImage.data
-        //             console.log('response:');
-
-        //             console.log(response);
-
-
-
-        //         })
-        //         .catch((error) => {
-        //             console.log('er is een errorrr');
-
-        //             console.log(error)
-
-        //             console.log('einde errorrr');
-                    
-        //         })
-        // },
+        addToCard(event) {
+            event.stopPropagation()
+            this.$store.dispatch('addToCart', this.product)
+        },
 
         goBack() {
             // go to products view
