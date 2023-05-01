@@ -1,13 +1,16 @@
 <template>
   <nav>
     <div class="logo">
-      <router-link to="/">LOGO</router-link>
+      <router-link to="/">
+        <img src="http://localhost:1337/uploads/Logo_926878a95e.png" alt="">
+      </router-link>
 
     </div>
     <div class="links">
       <router-link to="/shop">Shop</router-link>
       <router-link to="/over">Over</router-link>
       <router-link to="/blog">Blog</router-link>
+      <a href="#">Mandje</a>
       <!-- <router-link to="/">Mandje</router-link> -->
     </div>
   </nav>

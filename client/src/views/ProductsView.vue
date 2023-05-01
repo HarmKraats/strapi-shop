@@ -5,28 +5,30 @@
         </h1>
 
         <div class="products-list">
-            <Product v-for="product in products" :key="product.id"
+            <ProductSkeleton v-if="loading" v-for="index in 4" :key="index" />
+            <Product v-else v-for="product in products" :key="product.id"
                 :product="product" />
         </div>
     </div>
-
-
 </template>
   
 <script>
 // @ is an alias to /src
 import Product from '@/components/Product.vue'
+import ProductSkeleton from '@/components/ProductSkeleton.vue'
 // get the api var from main,js
 import api from '@/api.js'
 
 export default {
     name: 'ShopView',
     components: {
-        Product
+        Product,
+        ProductSkeleton
     },
     data() {
         return {
-            products: []
+            products: [],
+            loading: true
         }
     },
     created() {
@@ -34,7 +36,7 @@ export default {
     },
     methods: {
         async getProducts() {
-
+            this.loading = true;
             await api.get('/api/products?populate=productImage')
                 .then((response) => {
                     this.products = response.data.data
@@ -43,6 +45,9 @@ export default {
                 .catch((error) => {
                     console.log(error)
                 })
+                .finally(() => {
+                    this.loading = false;
+                });
         }
     },
 }
@@ -50,7 +55,6 @@ export default {
 
 
 <style scoped lang="scss">
-
 .products-list {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
