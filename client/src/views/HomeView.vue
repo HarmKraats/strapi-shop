@@ -27,7 +27,7 @@ import api from '@/api'
 export default {
   name: 'HomeView',
   components: {
-    // HelloWorld
+// HelloWorld
   },
   created() {
     this.getTest()
