@@ -21,6 +21,8 @@ if ($basePath !== '/' && strpos($requestUri, $basePath) === 0) {
 // Split the request URI into segments
 $segments = explode('/', trim($requestUri, '/'));
 
+// echo json_encode(['segments' => $segments]);
+
 // Get the controller and action from the segments
 $controller = isset($segments[0]) ? $segments[0] : '';
 $action = isset($segments[1]) ? $segments[1] : '';

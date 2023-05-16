@@ -1,7 +1,9 @@
 
 <template>
     <div class="container">
-        <div class="button" @click="showCartTotal()">Click me</div>
+        <div class="button" @click="showCartTotal()">Cart total = {{ cartTotal }}
+        </div>
+        <div class="button" @click="addToCart()">add to cart</div>
     </div>
 </template>
 
@@ -22,8 +24,6 @@ export default {
     },
     created() {
         this.getCartTotal()
-
-        console.log(this.cartTotal)
     },
 
     methods: {
@@ -36,8 +36,20 @@ export default {
                     console.log(err)
                 })
         },
-        showCartTotal() {
-            console.log(this.cartTotal)
+        async addToCart() {
+            const formData = new FormData();
+            formData.append('id', 1);
+            formData.append('quantity', 1);
+
+            await server
+                .post('/cart/add', formData)
+                .then((response) => {
+                    console.log(response);
+                    this.getCartTotal();
+                })
+                .catch((err) => {
+                    console.log(err);
+                });
         }
 
     }
