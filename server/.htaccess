@@ -1,0 +1,7 @@
+RewriteEngine On
+RewriteBase /01-own/strapi-vue-2/server/
+
+# Redirect all requests to index.php, preserving the original request URI
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ index.php?url=$1 [QSA,L]
