@@ -3,28 +3,40 @@
     <h2>Cart</h2>
     <ul>
       <li v-for="item in cart" :key="item.id">
-        {{ item.attributes.productName }} - {{ item.attributes.productPrice }}
+        {{ item.productName }} - {{ item.quantity }}
       </li>
     </ul>
-    <p>Total: {{ total }}</p>
+
   </div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import server from '@/server.js';
 
 export default {
-  computed: {
-    ...mapGetters(['cartTotalPrice']),
-    cart() {
-      return this.$store.state.cart
-    },
-    total() {
-      return this.cartTotalPrice
+  name: 'CartView',
+  data() {
+    return {
+      cart: [],
     }
   },
   created() {
-    this.cart = this.$store.state.cart
-  }
+    this.getCartItems();
+  },
+  methods: {
+    async getCartItems() {
+      await server.get('/cart/items')
+        .then((response) => {
+          this.cart = response.data.items;
+          console.log(response);
+
+        })
+        .catch((error) => {
+          console.log(error);
+        })
+    }
+
+
+  },
 }
 </script>

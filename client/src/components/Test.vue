@@ -1,7 +1,7 @@
 
 <template>
     <div class="container">
-        <div class="button" @click="showCartTotal()">Cart total = {{ cartTotal }}
+        <div class="button" >Cart total = {{ cartTotal }}
         </div>
         <div class="button" @click="addToCart()">add to cart</div>
     </div>

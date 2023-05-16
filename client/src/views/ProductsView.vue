@@ -15,6 +15,12 @@
         </div>
     </div>
 
+    <div class="container">
+        <div class="button" @click="seeCartSession()">
+            Click me to see cart session
+        </div>
+    </div>
+
 
 </template>
   
@@ -24,6 +30,7 @@ import Product from '@/components/Product.vue'
 import ProductSkeleton from '@/components/skeletons/ProductSkeleton.vue'
 // get the api var from main,js
 import api from '@/api.js'
+import server from '@/server'
 
 export default {
     name: 'ShopView',
@@ -47,7 +54,6 @@ export default {
             await api.get('/api/products?populate=productImage')
                 .then((response) => {
                     this.products = response.data.data
-                    // console.log(response)
                     this.loading = false;
                 })
                 .catch((error) => {
@@ -58,6 +64,16 @@ export default {
                 .finally(() => {
                 });
         },
+
+        seeCartSession() {
+            server.get('/cart/items')
+                .then((response) => {
+                    console.log(response)
+                })
+                .catch((error) => {
+                    console.log(error)
+                })
+        }
     },
 }
 </script>

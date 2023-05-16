@@ -6,5 +6,7 @@ const server = axios.create({
         Authorization: "Bearer BANANA"
       }
   });
+
+  server.defaults.withCredentials = true;
   export default server;
   

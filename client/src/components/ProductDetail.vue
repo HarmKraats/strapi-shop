@@ -145,7 +145,7 @@ export default {
             server.post('/cart/add', formData)
                 .then((response) => {
                     this.product.productQuantity -= this.productQuantity
-                    // console.log(response)
+                    console.log(response)
                 }).catch((error) => {
                     console.log(error)
                 })
