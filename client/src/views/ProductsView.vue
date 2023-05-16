@@ -1,8 +1,12 @@
 <template>
-    <div class="container">
+    <div class="container" v-auto-animate>
         <h1>
             Alle oorbellen
         </h1>
+        <div class="error" v-if="error">
+            <h2>Error bij het laden van de producten...</h2>
+            <p>Neem contact op met de website beheerder om dit probleem op te lossen.</p>
+        </div>
 
         <div class="products-list" v-auto-animate>
             <ProductSkeleton v-if="loading" v-for="index in 4" :key="index" />
@@ -10,6 +14,8 @@
                 :product="product" />
         </div>
     </div>
+
+
 </template>
   
 <script>
@@ -23,12 +29,13 @@ export default {
     name: 'ShopView',
     components: {
         Product,
-        ProductSkeleton
+        ProductSkeleton,
     },
     data() {
         return {
             products: [],
-            loading: true
+            loading: true,
+            error: false,
         }
     },
     created() {
@@ -41,12 +48,14 @@ export default {
                 .then((response) => {
                     this.products = response.data.data
                     // console.log(response)
+                    this.loading = false;
                 })
                 .catch((error) => {
                     console.log(error)
+                    this.loading = false;
+                    this.error = true;
                 })
                 .finally(() => {
-                    this.loading = false;
                 });
         },
     },
