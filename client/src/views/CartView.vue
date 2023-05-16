@@ -7,6 +7,10 @@
       </li>
     </ul>
 
+    <button v-if="cartTotal > 0" @click="clearCart">
+      Clear cart
+    </button>
+
   </div>
 </template>
 
@@ -18,9 +22,11 @@ export default {
   data() {
     return {
       cart: [],
+      cartTotal: 0,
     }
   },
   created() {
+    this.fetchCartTotal();
     this.getCartItems();
   },
   methods: {
@@ -34,7 +40,29 @@ export default {
         .catch((error) => {
           console.log(error);
         })
-    }
+    },
+    clearCart() {
+      server.post('/cart/clear')
+        .then((response) => {
+          console.log(response);
+          this.cart = [];
+          this.totalItems = 0;
+        })
+        .catch((error) => {
+          console.log(error);
+        })
+    },
+
+    fetchCartTotal() {
+      server.get('/cart/totalItems')
+        .then((response) => {
+          // console.log(response)
+          this.cartTotal = response.data.totalItems          
+        })
+        .catch((error) => {
+          console.log(error)
+        })
+    },
 
 
   },

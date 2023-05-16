@@ -20,6 +20,17 @@ function cartTotalAction()
     return ['total' => $total];
 }
 
+function carttotalItemsAction(){
+    // get the total number of items in the cart
+    $cartItems = isset($_SESSION['cart']) ? $_SESSION['cart'] : [];
+    $totalItems = 0;
+    foreach ($cartItems as $item) {
+        $totalItems += $item['quantity'];
+    }
+
+    return ['totalItems' => $totalItems];
+}
+
 function cartItemsAction()
 {
     // Logic for the cartItems endpoint
@@ -90,8 +101,9 @@ function cartAddAction()
 }
 
 
-function cartSessionAction()
-{
-    session_destroy();
-    return ['cartSession' => $_SESSION['cart'] ?? 'no cart session'];
+function cartClearAction(){
+    //clear the cart session
+    $_SESSION['cart'] = [];
+
+    return ['message' => 'Cart cleared'];
 }

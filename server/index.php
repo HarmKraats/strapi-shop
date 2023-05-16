@@ -37,7 +37,7 @@ if (!empty($controller)) {
     if (file_exists($controllerFile)) {
         require_once $controllerFile;
     } else {
-        echo json_encode(['error' => 'Controller not found']);
+        echo json_encode(['error' => "Controller - $controllerFile - not found"]);
         exit;
     }
     
@@ -50,7 +50,7 @@ if (!empty($controller)) {
         echo json_encode($result);
         exit;
     } else {
-        echo json_encode(['error' => 'Action not found']);
+        echo json_encode(['error' => "Action - $actionMethod - not found"]);
         exit;
     }
 } else {

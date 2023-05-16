@@ -10,7 +10,7 @@
       <router-link to="/shop">Shop</router-link>
       <router-link to="/over">Over</router-link>
       <router-link to="/blog">Blog</router-link>
-      <router-link to="/cart">Mandje - {{ this.$store.state.cart.length }}</router-link>
+      <router-link to="/cart">Mandje - {{ cartTotal }}</router-link>
       <!-- <router-link to="/">Mandje</router-link> -->
     </div>
   </nav>
@@ -27,10 +27,47 @@
 </template>
 
 <script>
+import server from './server';
 
 export default {
   name: 'App',
-  
+
+  data() {
+    return {
+      cartTotal: 0,
+    }
+  },
+
+  created() {
+    this.fetchCartTotal();
+    this.setupCartUpdates();
+  },
+
+  methods: {
+    fetchCartTotal() {
+      server.get('/cart/totalItems')
+        .then((response) => {
+          console.log(response)
+          this.cartTotal = response.data.totalItems
+        })
+        .catch((error) => {
+          console.log(error)
+        })
+    },
+    setupCartUpdates() {
+      // Add an event listener to listen for cart update events
+      document.addEventListener('cartUpdated', this.handleCartUpdate);
+    },
+    removeCartUpdates() {
+      // Remove the event listener when the component is about to be destroyed
+      document.removeEventListener('cartUpdated', this.handleCartUpdate);
+    },
+    handleCartUpdate(event) {
+      // Handle the cart update event
+      this.fetchCartTotal();
+    },
+  }
+
 }
 
 </script>
@@ -39,9 +76,10 @@ export default {
 @import url('https://fonts.googleapis.com/css2?family=Baskervville:ital@0;1&family=IBM+Plex+Serif:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap');
 
 
-:root{
+:root {
   --container-width: 70vw;
 }
+
 body {
   background-color: #F8F7F5;
   // font-family: 'Baskervville', serif;
@@ -59,8 +97,8 @@ body {
 }
 
 .container {
-    width: var(--container-width);
-    margin: 0 auto;
+  width: var(--container-width);
+  margin: 0 auto;
 }
 
 button {
@@ -74,6 +112,7 @@ button {
   padding: .7rem;
   cursor: pointer;
   transition: all .2s ease-in-out;
+  background-color: #3c9f51;
 
   &:hover {
     background-color: #2E7A3F;
@@ -87,8 +126,8 @@ nav {
   width: var(--container-width);
   padding: 2rem 0;
 
-  .logo{
-    img{
+  .logo {
+    img {
       width: 8rem;
     }
   }
@@ -111,7 +150,5 @@ nav {
 
 }
 
-footer{
-
-}
+footer {}
 </style>
