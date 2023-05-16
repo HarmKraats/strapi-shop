@@ -27,7 +27,7 @@
 </template>
 
 <script>
-import server from './server';
+import server from '@/api/server.js';
 
 export default {
   name: 'App',

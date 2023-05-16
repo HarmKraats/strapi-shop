@@ -14,14 +14,6 @@
                 :product="product" />
         </div>
     </div>
-
-    <div class="container">
-        <div class="button" @click="seeCartSession()">
-            Click me to see cart session
-        </div>
-    </div>
-
-
 </template>
   
 <script>
@@ -29,8 +21,8 @@
 import Product from '@/components/Product.vue'
 import ProductSkeleton from '@/components/skeletons/ProductSkeleton.vue'
 // get the api var from main,js
-import api from '@/api.js'
-import server from '@/server'
+import api from '@/api/api.js'
+import server from '@/api/server'
 
 export default {
     name: 'ShopView',
@@ -64,16 +56,6 @@ export default {
                 .finally(() => {
                 });
         },
-
-        seeCartSession() {
-            server.get('/cart/items')
-                .then((response) => {
-                    console.log(response)
-                })
-                .catch((error) => {
-                    console.log(error)
-                })
-        }
     },
 }
 </script>

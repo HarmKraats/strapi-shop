@@ -10,7 +10,7 @@
 
 
 <script>
-import server from '@/server.js'
+import server from '@/api/server.js'
 
 
 export default {

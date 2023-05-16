@@ -90,7 +90,7 @@
 
 
 <script>
-import addToCartMixin from '@/addToCartMixin.js'
+import addToCartMixin from '@/mixins/addToCartMixin.js'
 
 
 

@@ -37,7 +37,7 @@
   
 
 <script>
-import addToCartMixin from '@/addToCartMixin.js'
+import addToCartMixin from '@/mixins/addToCartMixin.js'
 
 export default {
     mixins: [addToCartMixin],

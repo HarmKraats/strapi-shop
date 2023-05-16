@@ -17,7 +17,7 @@
 // @ is an alias to /src
 import Blog from '@/components/Blog.vue'
 // get the api var from main,js
-import api from '@/api.js'
+import api from '@/api/api.js'
 
 export default {
   name: 'ShopView',

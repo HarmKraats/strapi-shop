@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h2>Cart</h2>
+    <h2>Mandje</h2>
     <ul>
       <li v-for="item in cart" :key="item.id">
         {{ item.productName }} - {{ item.quantity }}
@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import server from '@/server.js';
+import server from '@/api/server.js';
 
 export default {
   name: 'CartView',
@@ -46,7 +46,9 @@ export default {
         .then((response) => {
           console.log(response);
           this.cart = [];
-          this.totalItems = 0;
+          this.cartTotal = 0;
+          document.dispatchEvent(new Event('cartUpdated'));
+
         })
         .catch((error) => {
           console.log(error);

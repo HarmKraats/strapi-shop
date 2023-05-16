@@ -8,7 +8,7 @@
 
 
 <script>
-import api from '@/api.js'
+import api from '@/api/api.js'
 import ProductDetail from '@/components/ProductDetail.vue'
 import ProductDetailSkeleton from '@/components/skeletons/ProductDetailSkeleton.vue'
 
