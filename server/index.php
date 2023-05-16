@@ -1,4 +1,5 @@
 <?php
+
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: GET, POST, OPTIONS');
 header('Access-Control-Allow-Headers: Content-Type, Authorization');
@@ -21,7 +22,6 @@ if ($basePath !== '/' && strpos($requestUri, $basePath) === 0) {
 // Split the request URI into segments
 $segments = explode('/', trim($requestUri, '/'));
 
-// echo json_encode(['segments' => $segments]);
 
 // Get the controller and action from the segments
 $controller = isset($segments[0]) ? $segments[0] : '';

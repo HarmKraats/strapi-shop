@@ -1,7 +1,7 @@
 <template>
     
         <ProductDetailSkeleton v-if="loading" />
-        <ProductDetail v-else :product="product" />
+        <ProductDetail v-else :product="product" :product_id="product_id" />
  
 </template>
 
@@ -21,6 +21,7 @@ export default {
     data() {
         return {
             product: [],
+            product_id: null,
             loading: true,
             slug: this.$route.params.slug,
         }
@@ -45,6 +46,7 @@ export default {
             })
                 .then((response) => {
                     this.product = response.data.data[0].attributes
+                    this.product_id = response.data.data[0].id
                     this.productImages = this.product.productImage.data
                 })
                 .catch((error) => {

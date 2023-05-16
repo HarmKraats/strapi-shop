@@ -26,7 +26,7 @@
     "productImage": {
       "type": "media",
       "multiple": true,
-      "required": false,
+      "required": true,
       "allowedTypes": [
         "images",
         "videos"
@@ -37,7 +37,13 @@
     },
     "Slug": {
       "type": "uid",
-      "targetField": "productName"
+      "targetField": "productName",
+      "required": true
+    },
+    "productQuantity": {
+      "type": "integer",
+      "default": 1,
+      "min": 0
     }
   }
 }

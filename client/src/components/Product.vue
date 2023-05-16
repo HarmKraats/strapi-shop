@@ -1,5 +1,5 @@
 <template>
-        <div class="product" @click="navigateToProductDetails">
+        <div class="product" @click="navigateToProductDetails" v-if="product.attributes.productQuantity > 0">
             <img :src="'http://localhost:1337' + product.attributes.productImage.data[0].attributes.formats.small.url"
                 alt="product image">
             <div class="product-inner">
@@ -41,7 +41,7 @@
 export default {
     name: 'Product',
     props: {
-        product: Object
+        product: Object,
     },
     data() {
         return {

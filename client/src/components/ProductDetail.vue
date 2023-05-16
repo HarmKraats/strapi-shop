@@ -32,6 +32,7 @@
 
             <div class="details-wrapper">
                 <div class="title">
+                    <span class="warning" v-if="product.productQuantity <= 0">Dit product is uitverkocht!</span>
                     <h3>{{ product.productName }}</h3>
                 </div>
                 <span class="product-price">
@@ -42,12 +43,27 @@
                         &#8364;{{ product.productPrice }}
                     </span>
                 </span>
+                <div class="quantity" v-if="product.productQuantity > 0">
+                    <!-- quantity is stored in product -->
+                    <span class="quantity__title">Aantal</span>
+                    <!-- Select the amount of the product you want to buy as dropdown-->
+                    <select v-model="productQuantity">
+                        <option v-for="n in product.productQuantity" :key="n"
+                            :value="n">{{ n }}</option>
+                    </select>
+
+
+
+
+
+                </div>
                 <div class="description">
                     <p>{{ product.productDescription }}</p>
                 </div>
                 <div class="buttons-wrapper">
                     <div class="button button__add">
-                        <button @click="addToCard">Toevoegen aan
+                        <button @click="addToCard"
+                            :disabled="product.productQuantity <= 0">Toevoegen aan
                             winkelmandje</button>
                     </div>
                     <div class="button button__love">
@@ -75,6 +91,7 @@
 
 <script>
 // import api from '@/api.js'
+import server from '@/server.js'
 
 
 
@@ -90,11 +107,16 @@ export default {
             currentImageIndex: 0,
             touchStartX: 0,
             touchEndX: 0,
+            productQuantity: 1
         }
     },
     props: {
         product: {
             type: Object,
+            required: true
+        },
+        product_id: {
+            type: Number,
             required: true
         }
     },
@@ -107,10 +129,41 @@ export default {
         }
     },
     methods: {
+        addToCard(event) {
+            event.stopPropagation()
+            if (this.product.productQuantity <= 0) {
+                // mesage box
+                alert('Product is niet meer op voorraad')
+                return
+            }
+
+            const formData = new FormData();
+            formData.append('id', this.product_id);
+            formData.append('quantity', this.productQuantity);
+
+            // add product to cart
+            server.post('/cart/add', formData)
+                .then((response) => {
+                    this.product.productQuantity -= this.productQuantity
+                    // console.log(response)
+                }).catch((error) => {
+                    console.log(error)
+                })
+                .finally(() => {
+                    if (this.product.productQuantity <= 0) {
+                        this.$router.push({ name: 'shop' })
+                    }
+                })
+        },
+        goBack() {
+            // go to products view
+            this.$router.push({ name: 'shop' })
+        },
+
+
         selectImage(index) {
             this.currentImageIndex = index
         },
-
         nextImage() {
             if (this.currentImageIndex < this.productImages.length - 1) {
                 this.currentImageIndex++
@@ -118,7 +171,6 @@ export default {
                 this.currentImageIndex = 0
             }
         },
-
         prevImage() {
             if (this.currentImageIndex > 0) {
                 this.currentImageIndex--
@@ -126,7 +178,6 @@ export default {
                 this.currentImageIndex = this.productImages.length - 1
             }
         },
-
         onTouchStart(event) {
             this.touchStartX = event.touches[0].clientX;
         },
@@ -144,16 +195,6 @@ export default {
                 this.nextImage();
             }
         },
-
-        addToCard(event) {
-            event.stopPropagation()
-            this.$store.dispatch('addToCart', this.product)
-        },
-
-        goBack() {
-            // go to products view
-            this.$router.push({ name: 'shop' })
-        }
     }
 }
 
@@ -323,6 +364,16 @@ export default {
                 font-weight: 500;
                 margin-bottom: .5rem;
             }
+
+            .warning{
+                color: #fff;
+                padding: .3rem .5rem;
+                border-radius: 5px;
+                background-color: #e35a5a;
+                font-size: 1rem;
+                font-weight: 500;
+                margin-bottom: .5rem;
+            }
         }
 
         .product-price {
@@ -346,7 +397,13 @@ export default {
                 text-decoration: line-through;
             }
         }
+        .quantity{
+            text-align: left;
 
+            select{
+                margin-left: 10px;
+            }
+        }
         .description {
             text-align: left;
 
@@ -384,6 +441,8 @@ export default {
                     &:hover {
                         background-color: #2E7A3F;
                     }
+
+
                 }
 
                 &.button__add {
@@ -408,6 +467,17 @@ export default {
                             background-color: #839788;
                         }
                     }
+                }
+
+                button {
+                    &[disabled] {
+                        background-color: #C2C2C2;
+                        cursor: not-allowed;
+                        &:hover {
+                            background-color: #d6d4d4;
+                        }
+                    }
+
                 }
 
             }
