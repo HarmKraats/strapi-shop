@@ -1,5 +1,5 @@
 <template>
-    <div class="container" >
+    <div class="container">
         <!-- back button -->
         <div class="goBack" @click="goBack">
             Terug
@@ -7,7 +7,8 @@
 
         <div class="product-wrapper">
             <div class="image-wrapper">
-                <div class="big-img selected-image" v-auto-animate>
+                <div class="big-img selected-image" v-auto-animate
+                    @touchstart="onTouchStart" @touchend="onTouchEnd">
                     <img v-if="productImages[currentImageIndex]"
                         :src="'http://localhost:1337' + productImages[currentImageIndex].attributes.url"
                         alt="product image">
@@ -19,7 +20,7 @@
                 <div class="images-list" v-if="productImages.length > 1">
                     <!-- loop trough productImages -->
                     <div class="image" v-for="image, index in productImages"
-                        :key="image.id" @click="selectImage(index)" 
+                        :key="image.id" @click="selectImage(index)"
                         :class="{ 'selected-image': currentImageIndex == index }">
                         <img :src="'http://localhost:1337' + image.attributes.url"
                             alt="product image">
@@ -46,7 +47,8 @@
                 </div>
                 <div class="buttons-wrapper">
                     <div class="button button__add">
-                        <button @click="addToCard">Toevoegen aan winkelmandje</button>
+                        <button @click="addToCard">Toevoegen aan
+                            winkelmandje</button>
                     </div>
                     <div class="button button__love">
                         <button>
@@ -79,13 +81,15 @@
 export default {
 
     name: 'ProductDetail',
-    
+
     data() {
         return {
             slug: this.$route.params.slug,
             id: this.$route.params.id,
             productImages: [],
             currentImageIndex: 0,
+            touchStartX: 0,
+            touchEndX: 0,
         }
     },
     props: {
@@ -123,6 +127,24 @@ export default {
             }
         },
 
+        onTouchStart(event) {
+            this.touchStartX = event.touches[0].clientX;
+        },
+        onTouchEnd(event) {
+            this.touchEndX = event.changedTouches[0].clientX;
+            this.handleSwipe();
+        },
+        handleSwipe() {
+            const SWIPE_THRESHOLD = 50; // Adjust this value to control swipe sensitivity
+            const touchDiff = this.touchEndX - this.touchStartX;
+
+            if (touchDiff > SWIPE_THRESHOLD) {
+                this.prevImage();
+            } else if (touchDiff < -SWIPE_THRESHOLD) {
+                this.nextImage();
+            }
+        },
+
         addToCard(event) {
             event.stopPropagation()
             this.$store.dispatch('addToCart', this.product)
@@ -151,6 +173,29 @@ export default {
 
     //flex-wrap: wrap;
     .image-wrapper {
+
+        /* width */
+        ::-webkit-scrollbar {
+            width: 5px;
+            height: 5px;
+        }
+
+        /* Track */
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        /* Handle */
+        ::-webkit-scrollbar-thumb {
+            background: transparent;
+        }
+
+        /* Handle on hover */
+        ::-webkit-scrollbar-thumb:hover {
+            background: transparent;
+        }
+
+
         width: 60%;
         display: flex;
         flex-direction: column;
@@ -210,16 +255,27 @@ export default {
             }
         }
 
+
+
         .images-list {
             margin-top: 1rem;
             display: flex;
             flex-direction: row;
             justify-content: flex-start;
             gap: 1rem;
+            max-width: 100%;
+            overflow-x: auto;
+            overflow-y: hidden;
+            flex-wrap: nowrap;
+            scroll-snap-type: x mandatory;
+            padding-bottom: 5px;
+
 
             .image {
+                scroll-snap-align: center;
                 cursor: pointer;
-                width: 23%;
+                flex: 0 0 auto;
+                width: 150px;
                 height: 100%;
 
                 img {
@@ -231,6 +287,24 @@ export default {
                 &:not(.selected-image) {
                     opacity: .5;
                 }
+            }
+        }
+
+        &:hover {
+
+            /* Track */
+            ::-webkit-scrollbar-track {
+                background: #f1f1f1;
+            }
+
+            /* Handle */
+            ::-webkit-scrollbar-thumb {
+                background: #888;
+            }
+
+            /* Handle on hover */
+            ::-webkit-scrollbar-thumb:hover {
+                background: #555;
             }
         }
     }
