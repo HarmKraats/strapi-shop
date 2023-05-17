@@ -10,7 +10,9 @@
       <router-link to="/shop">Shop</router-link>
       <router-link to="/over">Over</router-link>
       <router-link to="/blog">Blog</router-link>
-      <router-link to="/cart">Mandje - {{ cartTotal }}</router-link>
+      <router-link to="/cart">
+        <ShoppingCart />
+      </router-link>
       <!-- <router-link to="/">Mandje</router-link> -->
     </div>
   </nav>
@@ -27,45 +29,27 @@
 </template>
 
 <script>
-import server from '@/api/server.js';
+import ShoppingCart from '@/components/blocks/ShoppingCart.vue';
 
 export default {
   name: 'App',
 
   data() {
     return {
-      cartTotal: 0,
+
     }
   },
 
+  components: {
+    ShoppingCart,
+  },
+
   created() {
-    this.fetchCartTotal();
-    this.setupCartUpdates();
+
   },
 
   methods: {
-    fetchCartTotal() {
-      server.get('/cart/totalItems')
-        .then((response) => {
-          console.log(response)
-          this.cartTotal = response.data.totalItems
-        })
-        .catch((error) => {
-          console.log(error)
-        })
-    },
-    setupCartUpdates() {
-      // Add an event listener to listen for cart update events
-      document.addEventListener('cartUpdated', this.handleCartUpdate);
-    },
-    removeCartUpdates() {
-      // Remove the event listener when the component is about to be destroyed
-      document.removeEventListener('cartUpdated', this.handleCartUpdate);
-    },
-    handleCartUpdate(event) {
-      // Handle the cart update event
-      this.fetchCartTotal();
-    },
+
   }
 
 }
@@ -144,6 +128,9 @@ nav {
     a {
       text-decoration: none;
       color: #000;
+      display: flex;
+      gap: 5px;
+      align-items: center;
     }
 
   }

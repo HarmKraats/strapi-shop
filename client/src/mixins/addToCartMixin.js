@@ -18,10 +18,9 @@ export default {
             server.post('/cart/add', formData)
                 .then((response) => {
                     this.product.productQuantity -= this.productQuantity
-                    // After updating the cart in PHP session
                     document.dispatchEvent(new Event('cartUpdated'));
+                    alert('Product is toegevoegd aan de winkelwagen')
 
-                    // console.log(response)
                 }).catch((error) => {
                     console.log(error)
                 })

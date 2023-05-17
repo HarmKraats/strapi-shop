@@ -67,7 +67,7 @@ function cartAddAction()
         return ['message' => 'Not enough products in stock'];
     }
 
-    $leftQuantity = $productQuantity - $quantity;
+    // $leftQuantity = $productQuantity - $quantity;
     // updateARowInDB('product_quantity = ' . $leftQuantity, 'products', 'id = ' . $id);
     // Get the current cart items from the session
     $cartItems = isset($_SESSION['cart']) ? $_SESSION['cart'] : [];

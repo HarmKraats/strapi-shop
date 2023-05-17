@@ -11,9 +11,13 @@
                         product.attributes.productPrice }}</span>
                 </span>
                 <div class="buttons-wrapper">
-                    <div class="button button__add">
+                    <!-- <div class="button button__add">
                         <button @click="addToCard">In mandje</button>
-                    </div>
+                    </div> -->
+
+                    <ButtonAddToCart :product_id="product_id" :product_quantity="product.attributes.productQuantity"/>
+
+
                     <div class="button button__love">
                         <button>
                             <svg xmlns="http://www.w3.org/2000/svg" width="25"
@@ -38,12 +42,17 @@
 
 <script>
 import addToCartMixin from '@/mixins/addToCartMixin.js'
+import ButtonAddToCart from './blocks/ButtonAddToCart.vue'
 
 export default {
     mixins: [addToCartMixin],
     name: 'Product',
     props: {
         product: Object,
+    },
+
+    components: {
+        ButtonAddToCart,
     },
     data() {
         return {

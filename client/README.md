@@ -7,7 +7,12 @@ npm install
 
 ### Compiles and hot-reloads for development
 ```
-npm run serve
+npm run dev
+```
+
+### Also start the strapi server in the strapi folder
+```
+npm run develop
 ```
 
 ### Compiles and minifies for production
