@@ -32,7 +32,8 @@
 
             <div class="details-wrapper">
                 <div class="title">
-                    <span class="warning" v-if="product.productQuantity <= 0">Dit product is uitverkocht!</span>
+                    <span class="warning" v-if="product.productQuantity <= 0">Dit
+                        product is uitverkocht!</span>
                     <h3>{{ product.productName }}</h3>
                 </div>
                 <span class="product-price">
@@ -61,11 +62,17 @@
                     <p>{{ product.productDescription }}</p>
                 </div>
                 <div class="buttons-wrapper">
-                    <div class="button button__add">
+                    <!-- <div class="button button__add">
                         <button @click="addToCard"
                             :disabled="product.productQuantity <= 0">Toevoegen aan
                             winkelmandje</button>
-                    </div>
+                    </div> -->
+
+                    <ButtonAddToCart :product_id="this.product_id"
+                        :product_max_quantity="product.productQuantity"
+                        :text="'Toevoegen aan winkelmandje'"
+                        :selected_quantity="productQuantity" />
+
                     <div class="button button__love">
                         <button>
                             <svg xmlns="http://www.w3.org/2000/svg" width="25"
@@ -91,6 +98,7 @@
 
 <script>
 import addToCartMixin from '@/mixins/addToCartMixin.js'
+import ButtonAddToCart from './blocks/ButtonAddToCart.vue'
 
 
 
@@ -109,6 +117,9 @@ export default {
             touchEndX: 0,
             productQuantity: 1
         }
+    },
+    components: {
+        ButtonAddToCart
     },
     props: {
         product: {
@@ -339,7 +350,7 @@ export default {
                 margin-bottom: .5rem;
             }
 
-            .warning{
+            .warning {
                 color: #fff;
                 padding: .3rem .5rem;
                 border-radius: 5px;
@@ -371,13 +382,15 @@ export default {
                 text-decoration: line-through;
             }
         }
-        .quantity{
+
+        .quantity {
             text-align: left;
 
-            select{
+            select {
                 margin-left: 10px;
             }
         }
+
         .description {
             text-align: left;
 
@@ -447,6 +460,7 @@ export default {
                     &[disabled] {
                         background-color: #C2C2C2;
                         cursor: not-allowed;
+
                         &:hover {
                             background-color: #d6d4d4;
                         }

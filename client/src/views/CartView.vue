@@ -34,8 +34,7 @@ export default {
       await server.get('/cart/items')
         .then((response) => {
           this.cart = response.data.items;
-          console.log(response);
-
+          // console.log(response);
         })
         .catch((error) => {
           console.log(error);
@@ -44,7 +43,7 @@ export default {
     clearCart() {
       server.post('/cart/clear')
         .then((response) => {
-          console.log(response);
+          // console.log(response);
           this.cart = [];
           this.cartTotal = 0;
           document.dispatchEvent(new Event('cartUpdated'));

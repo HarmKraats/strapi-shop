@@ -16,14 +16,18 @@ export default {
 
     data() {
         return {
-            productQuantity: 1,
+
         }
     },
 
     props: {
         product_id: Number,
-        product_quantity: Number,
+        product_max_quantity: Number,
         text: String,
+        selected_quantity: {
+            type: Number,
+            default: 1
+        },
     },
 
     components: {
@@ -32,12 +36,13 @@ export default {
 
     created() {
 
+        
     },
 
     methods: {
         addToCard(event) {
             event.stopPropagation()
-            if (this.product_quantity <= 0) {
+            if (this.product_max_quantity <= 0) {
                 // mesage box
                 alert('Product is niet meer op voorraad')
                 return
@@ -45,7 +50,7 @@ export default {
 
             const formData = new FormData();
             formData.append('id', this.product_id);
-            formData.append('quantity', this.productQuantity);
+            formData.append('quantity', this.selected_quantity);
 
             // add product to cart
             server.post('/cart/add', formData)
@@ -53,12 +58,13 @@ export default {
                     // this.product_quantity -= this.productQuantity
                     document.dispatchEvent(new Event('cartUpdated'));
                     alert('Product is toegevoegd aan de winkelwagen')
-
+                    // console.log(response);
+                    
                 }).catch((error) => {
                     console.log(error)
                 })
                 .finally(() => {
-                    if (this.product_quantity <= 0) {
+                    if (this.product_max_quantity <= 0) {
                         this.$router.push({ name: 'shop' })
                     }
                 })

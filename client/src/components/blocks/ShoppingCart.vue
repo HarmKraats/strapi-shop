@@ -33,7 +33,7 @@ export default {
         fetchCartTotal() {
             server.get('/cart/totalItems')
                 .then((response) => {
-                    console.log(response)
+                    // console.log(response)
                     this.cartTotal = response.data.totalItems
                 })
                 .catch((error) => {
