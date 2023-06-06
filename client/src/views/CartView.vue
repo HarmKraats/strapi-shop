@@ -1,19 +1,51 @@
 <template>
   <div>
     <h2>Mandje</h2>
-    <ul>
-      <li v-for="item in cart" :key="item.id">
-        {{ item.productName }} - {{ item.quantity }}
-      </li>
-    </ul>
+    <div v-if="cartTotal <= 0">
+      <p>
+        Je hebt nog geen producten in je mandje.
+      </p>
+      <p>
+        Klik <router-link to="/shop">hier</router-link> om naar de shop te gaan.
+      </p>
+      <!-- link to shop page -->
+      
+    </div>
+    <table class="cart-table" v-if="cartTotal > 0">
+      <thead>
+        <tr>
+          <th>Product</th>
+          <th>Quantity</th>
+          <th>Price</th>
+          <th>Total</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="item in cart" :key="item.id">
+          <td>{{ item.productName }}</td>
+          <td>{{ item.quantity }}</td>
+          <td>&euro; {{ item.price }}</td>
+          <td>&euro; {{ item.price * item.quantity }}</td>
 
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr>
+          <td colspan="4" class="cart-total">
+            <strong>Total: &euro; {{ cartTotal }}</strong>
+          </td>
+        </tr>
+      </tfoot>
+    </table>
     <button v-if="cartTotal > 0" @click="clearCart">
       Clear cart
     </button>
-
+    <!-- checkout button -->
+    <button @click="checkout">
+      Betalen
+    </button>
   </div>
 </template>
-
 <script>
 import server from '@/api/server.js';
 
@@ -21,51 +53,73 @@ export default {
   name: 'CartView',
   data() {
     return {
-      cart: [],
+      cart: null,
       cartTotal: 0,
     }
   },
-  created() {
-    this.fetchCartTotal();
-    this.getCartItems();
+
+  async mounted() {
+    try {
+      const response = await server.get('/cart/items');
+      this.cart = response.data.items;
+    } catch (error) {
+      console.log(error);
+    }
+
+    try {
+      const response = await server.get('/cart/Total');
+      this.cartTotal = response.data.total;
+    } catch (error) {
+      console.log(error);
+    }
   },
   methods: {
-    async getCartItems() {
-      await server.get('/cart/items')
-        .then((response) => {
-          this.cart = response.data.items;
-          // console.log(response);
-        })
-        .catch((error) => {
-          console.log(error);
-        })
-    },
     clearCart() {
-      server.post('/cart/clear')
+      server
+        .post('/cart/clear')
         .then((response) => {
-          // console.log(response);
           this.cart = [];
           this.cartTotal = 0;
           document.dispatchEvent(new Event('cartUpdated'));
-
         })
         .catch((error) => {
           console.log(error);
-        })
+        });
     },
 
-    fetchCartTotal() {
-      server.get('/cart/totalItems')
-        .then((response) => {
-          // console.log(response)
-          this.cartTotal = response.data.totalItems          
-        })
-        .catch((error) => {
-          console.log(error)
-        })
-    },
+    checkout(){
 
-
+    }
   },
 }
 </script>
+<style lang="scss">
+.cart-table {
+  width: 100%;
+  border-collapse: collapse;
+
+  th,
+  td {
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid #ccc;
+  }
+
+  th {
+    background-color: #f2f2f2;
+  }
+
+  td {
+    vertical-align: middle;
+  }
+
+  .cart-total {
+    text-align: right;
+    font-weight: bold;
+  }
+}
+
+button {
+  margin-top: 16px;
+}
+</style>

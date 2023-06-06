@@ -432,17 +432,17 @@ export default {
 
                 }
 
-                &.button__add {
-                    width: max-content;
+                // &.button__add {
+                //     width: max-content;
 
-                    button {
-                        background-color: #B8AEA0;
+                //     button {
+                //         background-color: #B8AEA0;
 
-                        &:hover {
-                            background-color: #968e83;
-                        }
-                    }
-                }
+                //         &:hover {
+                //             background-color: #968e83;
+                //         }
+                //     }
+                // }
 
                 &.button__love {
                     width: min-content;
@@ -465,9 +465,7 @@ export default {
                             background-color: #d6d4d4;
                         }
                     }
-
                 }
-
             }
         }
     }

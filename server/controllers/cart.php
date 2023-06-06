@@ -59,6 +59,7 @@ function cartAddAction()
         'quantity' => $quantity,
         'productName' => $product['product_name'],
         'price' => $product['product_price'],	
+        // 'image' => $product['product_image'],
     ];
 
     $productQuantity = $product['product_quantity'];

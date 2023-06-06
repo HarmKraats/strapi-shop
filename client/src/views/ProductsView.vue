@@ -37,25 +37,19 @@ export default {
             error: false,
         }
     },
-    created() {
-        this.getProducts()
+
+    async mounted(){
+        try {
+            const response = await api.get('/api/products?populate=productImage')
+            this.products = response.data.data
+            this.loading = false;
+        } catch (error) {
+            console.log(error)
+            this.loading = false;
+            this.error = true;
+        }
     },
     methods: {
-        async getProducts() {
-            this.loading = true;
-            await api.get('/api/products?populate=productImage')
-                .then((response) => {
-                    this.products = response.data.data
-                    this.loading = false;
-                })
-                .catch((error) => {
-                    console.log(error)
-                    this.loading = false;
-                    this.error = true;
-                })
-                .finally(() => {
-                });
-        },
     },
 }
 </script>

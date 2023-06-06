@@ -62,6 +62,11 @@ export default {
 
 :root {
   --container-width: 70vw;
+
+  --main-color: #A0B8A5;
+  --main-color-dark: #76897a;
+
+  --color-black: #2c3e50;
 }
 
 body {
@@ -74,7 +79,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
+  color: var(--color-black);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -83,6 +88,16 @@ body {
 .container {
   width: var(--container-width);
   margin: 0 auto;
+}
+
+a{
+  text-decoration: none;
+  color: var(--main-color);
+  transition: .2s;
+
+  &:hover{
+    color: var(--main-color-dark);
+  }
 }
 
 button {
@@ -96,10 +111,10 @@ button {
   padding: .7rem;
   cursor: pointer;
   transition: all .2s ease-in-out;
-  background-color: #3c9f51;
+  background-color: var(--main-color);
 
   &:hover {
-    background-color: #2E7A3F;
+    background-color: var(--main-color-dark);
   }
 }
 
@@ -126,8 +141,7 @@ nav {
     }
 
     a {
-      text-decoration: none;
-      color: #000;
+      color: var(--color-black);
       display: flex;
       gap: 5px;
       align-items: center;
