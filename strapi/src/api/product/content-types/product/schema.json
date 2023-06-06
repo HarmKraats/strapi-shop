@@ -44,6 +44,9 @@
       "type": "integer",
       "default": 1,
       "min": 0
+    },
+    "stripeProductID": {
+      "type": "string"
     }
   }
 }

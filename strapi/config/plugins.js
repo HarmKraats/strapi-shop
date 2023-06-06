@@ -1,6 +1,8 @@
 module.exports = {
-    'strapi-to-stripe': {
-      enabled: true,
-      resolve: './src/plugins/strapi-to-stripe'
-    },
-  }
+
+  'stripe-sync': {
+    enabled: true,
+    resolve: './src/plugins/stripe-sync'
+  },
+
+}
