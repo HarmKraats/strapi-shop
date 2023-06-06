@@ -45,6 +45,19 @@ const routes = [
   //   name: 'checkout',
   //   component: () => import('../views/CheckoutView.vue')
   // },
+
+  // success page
+  {
+    path: '/success',
+    name: 'success',
+    component: () => import('../views/SuccessView.vue')
+  },
+  {
+    path: '/cancel',
+    name: 'cancel',
+    component: () => import('../views/CancelView.vue')
+  },
+
   {
     path: '/:pathMatch(.*)*',
     name: 'not-found',
