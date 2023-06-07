@@ -1,13 +1,15 @@
 'use strict';
 
 module.exports = ({ strapi }) => ({
-    async index(ctx) {
-        // Send 200 `ok`
+    // make index function
+    index: async (ctx) => {
         console.log('ctx', ctx);
-        console.log('strapi', strapi);
-
-        ctx.send({
-            message: 'ok'
-        });
+    },
+    // make doATest function
+    doATest: async (ctx) => {
+        console.log('ctx', ctx);
     }
+
+
+
 });
