@@ -1,0 +1,19 @@
+{
+  "collectionName": "components_parts_large_images",
+  "info": {
+    "displayName": "LargeImage"
+  },
+  "options": {},
+  "attributes": {
+    "Image": {
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ],
+      "type": "media",
+      "multiple": false
+    }
+  }
+}

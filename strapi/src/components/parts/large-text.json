@@ -1,0 +1,29 @@
+{
+  "collectionName": "components_parts_large_texts",
+  "info": {
+    "displayName": "Text",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "Title": {
+      "type": "string"
+    },
+    "Size": {
+      "type": "enumeration",
+      "enum": [
+        "Klein en in het middel",
+        "Groot en linkt uitgeleind"
+      ],
+      "required": true
+    },
+    "Text": {
+      "type": "customField",
+      "options": {
+        "output": "HTML",
+        "preset": "standard"
+      },
+      "customField": "plugin::ckeditor.CKEditor"
+    }
+  }
+}

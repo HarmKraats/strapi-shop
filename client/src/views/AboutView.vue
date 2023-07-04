@@ -1,7 +1,12 @@
 <template>
-      <div class="container">
-        <Test />
-    </div>
+  
+
+<kinesis-container>
+  <KinesisDistance :strength="50" :distance="100" >
+    <div class="main"> </div>
+  </KinesisDistance>
+
+  </kinesis-container>
 </template>
 
 <script>
@@ -22,3 +27,13 @@ export default {
   },
 }
 </script>
+
+<style scoped>
+.main {
+  height: 50px;
+  width: 50px;
+  background-color: #fff;
+  position: relative;
+  overflow: hidden;
+}
+</style>

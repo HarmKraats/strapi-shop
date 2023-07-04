@@ -1,42 +1,49 @@
-<template>
-  <nav>
-    <div class="logo">
-      <router-link to="/">
-        <img src="http://localhost:1337/uploads/Logo_926878a95e.png" alt="">
-      </router-link>
+<script setup >
+import ShoppingCart from '@/components/blocks/ShoppingCart.vue';
 
-    </div>
-    <div class="links">
-      <router-link to="/shop">Shop</router-link>
-      <router-link to="/over">Over</router-link>
-      <router-link to="/blog">Blog</router-link>
-      <router-link to="/cart">
-        <ShoppingCart />
-      </router-link>
-      <!-- <router-link to="/">Mandje</router-link> -->
+</script>
+
+<template>
+  <nav :class="{ 'scrolled': showFullNav }">
+    <div class="container">
+      <div class="logo">
+        <router-link to="/">
+          <img src="@/assets/logo.svg" alt="logo" />
+        </router-link>
+
+      </div>
+      <div class="links">
+        <router-link to="/shop">Shop</router-link>
+        <router-link to="/over">Over</router-link>
+        <router-link to="/blog">Blog</router-link>
+        <router-link to="/cart">
+          <ShoppingCart />
+        </router-link>
+        <!-- <router-link to="/">Mandje</router-link> -->
+      </div>
     </div>
   </nav>
 
   <router-view />
 
-  <!-- <footer class="footer">
-    <ul>
+  <footer class="footer">
+    <ul class="container">
       <li>Copyright © 2023 CLAYCO</li>
       <li>Met liefde & zorg handgemaakt</li>
       <li>wenlivandieren@gmail.com</li>
     </ul>
-  </footer> -->
+  </footer>
 </template>
 
 <script>
-import ShoppingCart from '@/components/blocks/ShoppingCart.vue';
+
 
 export default {
   name: 'App',
 
   data() {
     return {
-
+      showFullNav: false
     }
   },
 
@@ -45,13 +52,30 @@ export default {
   },
 
   created() {
-
+    window.addEventListener("scroll", this.handleScroll);
   },
 
   methods: {
+    handleScroll() {
+      var currentScrollPosition = window.scrollY;
 
-  }
+      if (currentScrollPosition < this.scrollPosition) {
+        if (currentScrollPosition === 0) {
+          this.showFullNav = false;
+        }
+        // Additional logic for scrolling up
+      } else {
+        this.showFullNav = true;
+        // Additional logic for scrolling down
+      }
 
+      this.scrollPosition = currentScrollPosition;
+    }
+  },
+
+  destroyed() {
+    window.removeEventListener("scroll", this.handleScroll);
+  },
 }
 
 </script>
@@ -64,14 +88,22 @@ export default {
   --container-width: 70vw;
 
   --main-color: #A0B8A5;
+  --color-white: #fff;
   --main-color-dark: #76897a;
 
-  --color-black: #2c3e50;
+  --color-black: #1e1e1e;
+}
+
+main {
+  width: 100%;
 }
 
 body {
   background-color: #F8F7F5;
   // font-family: 'Baskervville', serif;
+  margin: 0;
+  overflow-x: hidden;
+
 }
 
 #app {
@@ -90,12 +122,12 @@ body {
   margin: 0 auto;
 }
 
-a{
+a {
   text-decoration: none;
   color: var(--main-color);
   transition: .2s;
 
-  &:hover{
+  &:hover {
     color: var(--main-color-dark);
   }
 }
@@ -119,11 +151,23 @@ button {
 }
 
 nav {
-  font-family: 'IBM Plex Serif', serif;
-  display: flex;
-  justify-content: space-between;
-  width: var(--container-width);
+  z-index: 10;
+  width: 100%;
+  transition: background-color .3s ease-in-out, padding .2s ease-in-out;
   padding: 2rem 0;
+
+  &.scrolled {
+    position: sticky;
+    padding: 1.1rem 0;
+    top: 0;
+    background-color: var(--color-white);
+  }
+
+  .container {
+    font-family: 'IBM Plex Serif', serif;
+    display: flex;
+    justify-content: space-between;
+  }
 
   .logo {
     img {
@@ -151,5 +195,21 @@ nav {
 
 }
 
-footer {}
+footer {
+  width: 100%;
+  margin-top: 5rem;
+  padding: 2rem 0;
+  display: flex;
+  align-items: center;
+  background-color: var(--color-white);
+
+  ul {
+    display: flex;
+    justify-content: space-between;
+
+    li {
+      list-style-type: none;
+    }
+  }
+}
 </style>

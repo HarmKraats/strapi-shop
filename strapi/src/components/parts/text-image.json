@@ -1,0 +1,44 @@
+{
+  "collectionName": "components_parts_text_images",
+  "info": {
+    "displayName": "TextImage",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "Title": {
+      "type": "string"
+    },
+    "View": {
+      "type": "enumeration",
+      "enum": [
+        "Plaatje Rechts",
+        "Plaatje links"
+      ]
+    },
+    "Image": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "Button": {
+      "type": "component",
+      "repeatable": true,
+      "component": "components.button"
+    },
+    "Text": {
+      "type": "customField",
+      "options": {
+        "output": "HTML",
+        "preset": "standard"
+      },
+      "customField": "plugin::ckeditor.CKEditor"
+    }
+  }
+}

@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1101" height="311" viewBox="0 0 1101 311">
+  <g id="Group_27" data-name="Group 27" transform="translate(-217 -618)">
+    <text id="CLAYCO" transform="translate(553 863)" fill="#212134" font-size="215" font-family="SegoeUI, Segoe UI"><tspan x="0" y="0">CLAYCO</tspan></text>
+    <g id="Group_26" data-name="Group 26" transform="translate(-1160 233)">
+      <g id="Rectangle_9" data-name="Rectangle 9" transform="translate(1377 385)" fill="#50507a" stroke="#707070" stroke-width="1" opacity="0">
+        <rect width="311" height="311" stroke="none"/>
+        <rect x="0.5" y="0.5" width="310" height="310" fill="none"/>
+      </g>
+      <g id="Group_1" data-name="Group 1" transform="translate(718.821 457.273)">
+        <path id="Path_3" data-name="Path 3" d="M0-63.586s11.3-32.058,33.306-49.966c13.482-10.973,40.035-14.21,63.179-1.476s29.4,52.41,29.4,52.41" transform="translate(751.134 210.344)" fill="none" stroke="#212134" stroke-linecap="round" stroke-width="8"/>
+        <path id="Path_4" data-name="Path 4" d="M0-29.264S6.436-64.605,26.819-91.5c6.054-7.987,15.1-12.836,22.995-19.4,24.764-16.322,60.762-20.207,96.7,0s47.758,81.633,47.758,81.633" transform="translate(717.868 176.776)" fill="none" stroke="#212134" stroke-linecap="round" stroke-width="8"/>
+        <path id="Path_5" data-name="Path 5" d="M-.166,5.5s-3.5-41,22.71-77.681C30.328-83.07,44.956-97.614,60.881-105.83c33.029-22.066,81.127-27.559,127.329,0,15.616,9.315,32.489,20.052,47.84,47.886S249.615,5.5,249.615,5.5" transform="translate(688.5 142.223)" fill="none" stroke="#212134" stroke-linecap="round" stroke-width="8"/>
+      </g>
+    </g>
+  </g>
+</svg>

@@ -1,3 +1,13 @@
+<script setup>
+// @ is an alias to /src
+import Product from '@/components/Product.vue'
+import ProductSkeleton from '@/components/skeletons/ProductSkeleton.vue'
+// get the api var from main,js
+import api from '@/api/api.js'
+import server from '@/api/server.js'
+
+</script>
+
 <template>
     <div class="container" v-auto-animate>
         <h1>
@@ -17,19 +27,9 @@
 </template>
   
 <script>
-// @ is an alias to /src
-import Product from '@/components/Product.vue'
-import ProductSkeleton from '@/components/skeletons/ProductSkeleton.vue'
-// get the api var from main,js
-import api from '@/api/api.js'
-import server from '@/api/server'
 
 export default {
     name: 'ShopView',
-    components: {
-        Product,
-        ProductSkeleton,
-    },
     data() {
         return {
             products: [],

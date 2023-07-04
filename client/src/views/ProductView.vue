@@ -1,22 +1,25 @@
+<script setup>
+
+import api from '@/api/api.js'
+import ProductDetail from '@/components/ProductDetail.vue'
+import ProductDetailSkeleton from '@/components/skeletons/ProductDetailSkeleton.vue'
+
+</script>
+
+
 <template>
-    
-        <ProductDetailSkeleton v-if="loading" />
-        <ProductDetail v-else :product="product" :product_id="product_id" />
- 
+    <ProductDetailSkeleton v-if="loading" />
+    <ProductDetail v-else :product="product" :product_id="product_id" />
 </template>
 
 
 
 <script>
-import api from '@/api/api.js'
-import ProductDetail from '@/components/ProductDetail.vue'
-import ProductDetailSkeleton from '@/components/skeletons/ProductDetailSkeleton.vue'
+
 
 
 
 export default {
-
-
     name: 'ProductDetailView',
     data() {
         return {
@@ -25,10 +28,6 @@ export default {
             loading: true,
             slug: this.$route.params.slug,
         }
-    },
-    components: {
-        ProductDetail,
-        ProductDetailSkeleton
     },
 
     created() {

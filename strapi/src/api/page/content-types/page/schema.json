@@ -1,0 +1,33 @@
+{
+  "kind": "collectionType",
+  "collectionName": "pages",
+  "info": {
+    "singularName": "page",
+    "pluralName": "pages",
+    "displayName": "Page",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "Title": {
+      "type": "string"
+    },
+    "Slug": {
+      "type": "uid",
+      "targetField": "Title"
+    },
+    "Pagebuilder": {
+      "type": "dynamiczone",
+      "components": [
+        "parts.categories",
+        "parts.image-slider",
+        "parts.large-image",
+        "parts.large-text",
+        "parts.text-image"
+      ]
+    }
+  }
+}

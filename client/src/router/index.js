@@ -58,11 +58,23 @@ const routes = [
     component: () => import('../views/CancelView.vue')
   },
 
+
+
+  {
+    path: '/:slug', // Dynamic route for all page slugs
+    name: 'page',
+    component: () => import('../views/PageView.vue')
+  },
+
   {
     path: '/:pathMatch(.*)*',
     name: 'not-found',
     component: () => import('../views/NotFoundView.vue')
   }
+
+
+
+
 
 ]
 

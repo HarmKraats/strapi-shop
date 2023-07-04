@@ -1,3 +1,8 @@
+<script setup >
+import addToCartMixin from '@/mixins/addToCartMixin.js'
+import ButtonAddToCart from './blocks/ButtonAddToCart.vue'
+</script>
+
 <template>
     <div class="product" @click="navigateToProductDetails"
         v-if="product.attributes.productQuantity > 0">
@@ -15,7 +20,8 @@
                         <button @click="addToCard">In mandje</button>
                     </div> -->
 
-                    <ButtonAddToCart :product_id="product_id" :product_quantity="product.attributes.productQuantity"/>
+                    <ButtonAddToCart :product_id="product_id"
+                        :product_quantity="product.attributes.productQuantity" />
 
 
                     <div class="button button__love">
@@ -41,18 +47,13 @@
   
 
 <script>
-import addToCartMixin from '@/mixins/addToCartMixin.js'
-import ButtonAddToCart from './blocks/ButtonAddToCart.vue'
+
 
 export default {
     mixins: [addToCartMixin],
     name: 'Product',
     props: {
         product: Object,
-    },
-
-    components: {
-        ButtonAddToCart,
     },
     data() {
         return {
@@ -106,6 +107,7 @@ export default {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            flex-wrap: wrap;
 
             .buttons-wrapper {
                 display: flex;
@@ -173,7 +175,6 @@ export default {
     }
 
     .product-price {
-        width: 100%;
         display: block;
         text-align: start;
 
@@ -182,12 +183,10 @@ export default {
             color: #A0B8A5;
         }
     }
-
-
 }
 
 // make container responsive
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 1100px) {
     .product {
         width: 12rem;
     }
