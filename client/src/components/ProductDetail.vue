@@ -7,30 +7,35 @@
 
         <div class="product-wrapper">
             <div class="image-wrapper">
-                <div class="big-img selected-image" v-auto-animate
-                    @touchstart="onTouchStart" @touchend="onTouchEnd">
-                    <img v-if="productImages[currentImageIndex]"
-                        :src="'http://localhost:1337' + productImages[currentImageIndex].attributes.url"
-                        alt="product image">
+                <div class="big-img selected-image" @touchstart="onTouchStart"
+                    ref="imageWrapper" @touchend="onTouchEnd">
+                    <div class="image-wrapper">
+                        <img v-if="productImages[currentImageIndex]"
+                            :src="'http://localhost:1337' + productImages[currentImageIndex].attributes.formats.large.url"
+                            alt="product image">
+                    </div>
                     <div v-if="productImages.length > 1" class="next"
                         @click="nextImage">&#8250;</div>
                     <div v-if="productImages.length > 1" class="prev"
                         @click="prevImage">&#8249;</div>
                 </div>
-                <div class="images-list" v-if="productImages.length > 1">
-                    <!-- loop trough productImages -->
-                    <div class="image" v-for="image, index in productImages"
-                        :key="image.id" @click="selectImage(index)"
-                        :class="{ 'selected-image': currentImageIndex == index }">
-                        <img :src="'http://localhost:1337' + image.attributes.url"
-                            alt="product image">
+
+
+                <div class="slider" v-if="productImages.length > 1">
+                    <div class="imageSlider sliderTrack" data-glide-el="track">
+                        <div class="sliderItems">
+                            <img class="Slide" v-for="image, index in productImages"
+                                :key="image.id" @click="selectImage(index)"
+                                :src="'http://localhost:1337' + image.attributes.formats.small.url"
+                                alt="plaatje"
+                                :class="{ 'selected-image': currentImageIndex == index }">
+                        </div>
                     </div>
-
-
                 </div>
+
             </div>
 
-            <div class="details-wrapper">
+            <div class="details-wrapper" ref="detailsWrapper">
                 <div class="title">
                     <span class="warning" v-if="product.productQuantity <= 0">Dit
                         product is uitverkocht!</span>
@@ -137,15 +142,14 @@ export default {
     computed: {
         currentImage() {
             return this.productImages[this.currentImageIndex]
-        }
+        },
+
     },
     methods: {
         goBack() {
             // go to products view
-            this.$router.push({ name: 'shop' })
+            this.$router.push('/shop')
         },
-
-
         selectImage(index) {
             this.currentImageIndex = index
         },
@@ -180,7 +184,24 @@ export default {
                 this.nextImage();
             }
         },
-    }
+        calculateImageWrapperHeight() {
+            const imageHeights = this.productImages.map(
+                image => image.attributes.formats.large.height
+            )
+            const smallestImageHeight = Math.min(...imageHeights)
+
+            const imageWrapper = this.$refs.imageWrapper,
+                  detailsWrapper = this.$refs.detailsWrapper
+
+            if(!imageWrapper || !detailsWrapper) return
+            
+            detailsWrapper.style.height = `${smallestImageHeight}px`
+            imageWrapper.style.height = `${smallestImageHeight}px`
+        },
+    },
+    mounted() {
+        this.calculateImageWrapperHeight()
+    },
 }
 
 
@@ -188,6 +209,37 @@ export default {
 
 
 <style scoped lang="scss">
+.imageSlider {
+
+    .sliderItems {
+        display: flex;
+        gap: 1rem;
+        justify-content: flex-start;
+        margin-top: 1rem;
+        overflow-x: auto;
+        padding-bottom: 5px;
+        scroll-snap-type: x mandatory;
+        height: 20vh;
+
+        img {
+            scroll-snap-align: center;
+            overflow: hidden;
+            height: 100%;
+            object-fit: contain;
+            user-select: none;
+            width: fit-content !important;
+            cursor: pointer;
+            flex: 0 0 auto;
+
+            &:not(.selected-image) {
+                opacity: .5;
+            }
+        }
+    }
+
+}
+
+
 .product-wrapper {
     display: flex;
     flex-direction: row;
@@ -228,16 +280,23 @@ export default {
         justify-content: space-between;
 
         .selected-image {
-            width: 100%;
-            height: 100%;
+            position: relative;
 
-            img {
+            .image-wrapper {
+                display: flex;
+                justify-content: flex-start;
                 width: 100%;
                 height: 100%;
-                object-fit: cover;
-            }
 
-            position: relative;
+                img {
+                    object-fit: contain;
+                    user-select: none;
+                    width: min-content;
+                    max-width: 100%;
+                    height: 100%;
+
+                }
+            }
 
             .prev,
             .next {
@@ -255,7 +314,6 @@ export default {
                 cursor: pointer;
                 transition: all .2s ease-in-out;
                 z-index: 1;
-                // disable selection
                 user-select: none;
 
                 &:hover {
@@ -282,40 +340,6 @@ export default {
         }
 
 
-
-        .images-list {
-            margin-top: 1rem;
-            display: flex;
-            flex-direction: row;
-            justify-content: flex-start;
-            gap: 1rem;
-            max-width: 100%;
-            overflow-x: auto;
-            overflow-y: hidden;
-            flex-wrap: nowrap;
-            scroll-snap-type: x mandatory;
-            padding-bottom: 5px;
-
-
-            .image {
-                scroll-snap-align: center;
-                cursor: pointer;
-                flex: 0 0 auto;
-                width: 150px;
-                height: 100%;
-
-                img {
-                    width: 100%;
-                    height: 100%;
-                    object-fit: cover;
-                }
-
-                &:not(.selected-image) {
-                    opacity: .5;
-                }
-            }
-        }
-
         &:hover {
 
             /* Track */
@@ -340,6 +364,7 @@ export default {
         display: flex;
         flex-direction: column;
         gap: 2rem;
+        justify-content: center;
 
         .title {
             text-align: left;

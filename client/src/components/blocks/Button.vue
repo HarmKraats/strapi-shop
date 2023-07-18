@@ -1,8 +1,13 @@
 <template>
     <div class="button">
-        <a :href="this.url" :target="this.target">
+        <!-- <a :href="this.url" :target="this.target">
             <slot></slot>
-        </a>
+        </a> -->
+
+        <!-- insteat of an A tag use a router-link or link -->
+        <router-link :to="this.url" :target="this.target">
+            <slot></slot>
+        </router-link>
     </div>
 </template>
 

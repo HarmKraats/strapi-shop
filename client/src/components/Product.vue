@@ -6,8 +6,11 @@ import ButtonAddToCart from './blocks/ButtonAddToCart.vue'
 <template>
     <div class="product" @click="navigateToProductDetails"
         v-if="product.attributes.productQuantity > 0">
-        <img :src="'http://localhost:1337' + product.attributes.productImage.data[0].attributes.formats.small.url"
-            alt="product image">
+        <div class="image-wrapper">
+            <img :src="'http://localhost:1337' + this.productImage"
+                alt="product image">
+        </div>
+
         <div class="product-inner">
             <h3>{{ product.attributes.productName }}</h3>
             <div class="product-inner-inner">
@@ -43,12 +46,9 @@ import ButtonAddToCart from './blocks/ButtonAddToCart.vue'
     </div>
 </template>
 
-  
-  
+
 
 <script>
-
-
 export default {
     mixins: [addToCartMixin],
     name: 'Product',
@@ -60,18 +60,29 @@ export default {
             slug: '',
             productQuantity: 1,
             product_id: this.product.id,
+            productImages: this.product.attributes.productImage.data,
+            productImage: ''
         }
     },
     created() {
         this.slug = this.product.attributes.Slug
-        // console.log(this.product);
+        console.log(this.productImages);
 
     },
     methods: {
         navigateToProductDetails() {
             this.$router.push({ name: 'productDetails', params: { slug: this.slug } })
         },
-    }
+        calculateImageWrapperHeight() {
+            const imageHeights = this.productImages.map(image => image.attributes.formats.small.height)
+            const smallestImageIndex = imageHeights.indexOf(Math.min(...imageHeights))
+            this.productImage = this.productImages[smallestImageIndex].attributes.formats.small.url
+        },
+        
+    },
+    mounted() {
+        this.calculateImageWrapperHeight()
+    },
 }
 
 </script>
@@ -98,6 +109,8 @@ export default {
         transition: .2s ease-in-out;
         border-radius: 10px 10px 0 0;
         width: 100%;
+        height: 100%;
+        object-fit: cover;
     }
 
     .product-inner {

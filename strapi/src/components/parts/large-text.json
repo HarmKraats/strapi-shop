@@ -12,10 +12,11 @@
     "Size": {
       "type": "enumeration",
       "enum": [
-        "Klein en in het middel",
-        "Groot en linkt uitgeleind"
+        "Midden uitgelijnd",
+        "Links uitgelijnd"
       ],
-      "required": true
+      "required": true,
+      "default": "Midden uitgelijnd"
     },
     "Text": {
       "type": "customField",

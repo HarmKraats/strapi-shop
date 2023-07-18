@@ -1,78 +1,55 @@
 <script setup >
 import strapiService from '../api/strapiService';
 
-import Categories from '@/components/parts/Categories.vue';
-import ImageSlider from '@/components/parts/ImageSlider.vue';
-import LargeImage from '@/components/parts/LargeImage.vue';
-import Products from '@/components/parts/Products.vue';
-import Text from '@/components/parts/Text.vue';
-import TextImage from '@/components/parts/TextImage.vue';
 
 
-// Elements
-import Dots_1 from '@/components/elements/Dots_1.vue';
-import Blob_green from '@/components/elements/Blob_green.vue';
-import Dots_2 from '@/components/elements/Dots_2.vue';
+// Page templates
+import Home from '@/components/templates/Home.vue';
+import Shop from '@/components/templates/Shop.vue';
+
+import Pagebuilder from '@/components/templates/Pagebuilder.vue';
 
 </script>
 
 <template>
-    <header>
-        <h1>
-            {{ page.Title }}
-            <Dots_1 />
-        </h1>
-        <Blob_green :class="'green_blob'"/>
-        <Dots_2 :class="'dots_bottom'"/>
-    </header>
-    <section v-if="page.Pagebuilder">
-        <section v-for="(component, index) in page.Pagebuilder" :key="index"
-            :class="getComponentName(component.__component)">
-            <component :is="getComponentName(component.__component)"
-                :data="component" />
-        </section>
-    </section>
+    <Pagebuilder v-if="template == 'Pagebuilder' && page.Pagebuilder"
+        :page="page" />
+
+    <Home v-else-if="template == 'Home page'" :page="page" />
+
+    <Shop v-else-if="template == 'Shop page'" :page="page" />
+
+    <h1 v-else>404</h1>
 </template>
   
 <script>
 
 
 export default {
-    components: {
-        Categories,
-        ImageSlider,
-        LargeImage,
-        Products,
-        Text,
-        TextImage
-
-    },
+    name: 'PageView',
     data() {
         return {
             page: 'null',
-            pageId: 0
+            pageId: 0,
+            template: 'null'
         };
     },
     mounted() {
-        const slug = this.$route.params.slug;
-        strapiService.getPageBySlug(slug).then(page => {
-            this.page = page.attributes;
-            this.pageId = page.id;
-            console.log(this.page);
-        });
+        this.fetchPage();
     },
     methods: {
-        getComponentName(component) {
-            const componentMapping = {
-                'parts.categories': 'Categories',
-                'parts.image-slider': 'ImageSlider',
-                'parts.large-image': 'LargeImage',
-                'parts.products': 'Products',
-                'parts.large-text': 'Text',
-                'parts.text-image': 'TextImage',
-            };
+        fetchPage() {
+            strapiService.getPageBySlug(this.$route.params.slug).then(page => {
+                this.page = page.attributes;
+                this.pageId = page.id;
+                this.template = this.page.Template
+            });
+        },
 
-            return componentMapping[component] || 'div';
+    },
+    watch: {
+        $route() {
+            this.fetchPage();
         }
     }
 };
@@ -116,9 +93,9 @@ header {
         z-index: -1;
     }
 
-    .dots_bottom{
+    .dots_bottom {
         position: absolute;
-        left:   240px;
+        left: 240px;
         bottom: 50px;
     }
 

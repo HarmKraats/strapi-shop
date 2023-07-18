@@ -17,7 +17,9 @@
     },
     "Slug": {
       "type": "uid",
-      "targetField": "Title"
+      "targetField": "Title",
+      "required": true,
+      "minLength": 1
     },
     "Pagebuilder": {
       "type": "dynamiczone",
@@ -28,6 +30,15 @@
         "parts.large-text",
         "parts.text-image"
       ]
+    },
+    "Template": {
+      "type": "enumeration",
+      "enum": [
+        "Pagebuilder",
+        "Home page",
+        "Shop page"
+      ],
+      "default": "Pagebuilder"
     }
   }
 }

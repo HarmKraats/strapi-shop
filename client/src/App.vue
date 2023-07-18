@@ -1,5 +1,7 @@
 <script setup >
 import ShoppingCart from '@/components/blocks/ShoppingCart.vue';
+import strapiService from './api/strapiService';
+
 
 </script>
 
@@ -13,13 +15,14 @@ import ShoppingCart from '@/components/blocks/ShoppingCart.vue';
 
       </div>
       <div class="links">
-        <router-link to="/shop">Shop</router-link>
-        <router-link to="/over">Over</router-link>
-        <router-link to="/blog">Blog</router-link>
+        <router-link v-for="menuItem in menuItems" :key="menuItem.id"
+          :to="menuItem.attributes.Slug">
+          {{ menuItem.attributes.Title }}
+        </router-link>
+
         <router-link to="/cart">
           <ShoppingCart />
         </router-link>
-        <!-- <router-link to="/">Mandje</router-link> -->
       </div>
     </div>
   </nav>
@@ -43,13 +46,30 @@ export default {
 
   data() {
     return {
-      showFullNav: false
+      showFullNav: false,
+      scrollPosition: 0,
+      menuItems: [],
     }
   },
 
   components: {
     ShoppingCart,
   },
+
+  mounted() {
+    // Fetch API response using strapiService
+    strapiService.getMenuItems().then(response => {
+      const menuItems = response.map(page => ({
+        id: page.id,
+        attributes: {
+          Title: page.MenuItemTitle,
+          Slug: page.page.data.attributes.Slug
+        }
+      }));
+      this.menuItems = menuItems;
+    });
+  },
+
 
   created() {
     window.addEventListener("scroll", this.handleScroll);
@@ -63,12 +83,9 @@ export default {
         if (currentScrollPosition === 0) {
           this.showFullNav = false;
         }
-        // Additional logic for scrolling up
       } else {
         this.showFullNav = true;
-        // Additional logic for scrolling down
       }
-
       this.scrollPosition = currentScrollPosition;
     }
   },
@@ -84,26 +101,34 @@ export default {
 @import url('https://fonts.googleapis.com/css2?family=Baskervville:ital@0;1&family=IBM+Plex+Serif:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap');
 
 
+
 :root {
   --container-width: 70vw;
+  --section-spacing: 5rem;
 
   --main-color: #A0B8A5;
   --color-white: #fff;
   --main-color-dark: #76897a;
 
   --color-black: #1e1e1e;
+
 }
 
 main {
   width: 100%;
 }
 
+*:not(p) {
+  margin: 0;
+  padding: 0;
+}
+
 body {
+  line-height: 1.5;
   background-color: #F8F7F5;
   // font-family: 'Baskervville', serif;
   margin: 0;
   overflow-x: hidden;
-
 }
 
 #app {
@@ -153,7 +178,7 @@ button {
 nav {
   z-index: 10;
   width: 100%;
-  transition: background-color .3s ease-in-out, padding .2s ease-in-out;
+  transition: background-color .3s ease-in-out, padding .2s ease-in-out, font-weight 0s ease-in-out;
   padding: 2rem 0;
 
   &.scrolled {

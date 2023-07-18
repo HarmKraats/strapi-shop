@@ -1,12 +1,10 @@
 <template>
   
 
-<kinesis-container>
-  <KinesisDistance :strength="50" :distance="100" >
     <div class="main"> </div>
-  </KinesisDistance>
 
-  </kinesis-container>
+
+
 </template>
 
 <script>

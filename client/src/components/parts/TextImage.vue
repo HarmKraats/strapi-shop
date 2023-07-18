@@ -10,19 +10,19 @@ import Blob_blue from '@/components/elements/Blob_blue.vue';
 
 <template>
     <div class="container" :class="{ 'swap': getImagePos() }">
-        <div data-scroll data-scroll-speed="3" class="image">
+        <div class="image">
             <img :src="'http://localhost:1337' + this.image" alt="plaatje">
             <Blob_brown :class="'brown_blob'" v-if="!getImagePos()" />
             <Blob_blue :class="'blue_blob'" v-if="getImagePos()" />
 
         </div>
-        <div data-scroll data-scroll-speed="-3.75" data-scroll-offset="-100%"
-            class="text">
+        <div class="text">
+            <h2>{{ this.data.Title }}</h2>
             <span v-html="this.text">
 
             </span>
 
-            <simpleButton :url="this.button.ButtonUrl"
+            <simpleButton v-if="this.button" :url="this.button.ButtonUrl"
                 :target="this.button.ButtonTarget">
                 {{ this.button.ButtonText }}
             </simpleButton>
@@ -54,9 +54,9 @@ export default {
         getImagePos() {
             console.log(this.imagePosition)
             if (this.imagePosition === 'Plaatje links') {
-                return true;
-            } else {
                 return false;
+            } else {
+                return true;
             }
         }
     },
@@ -70,6 +70,7 @@ export default {
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
+    margin-bottom: var(--section-spacing);
 
 
     &.swap {
