@@ -1,23 +1,12 @@
 <script setup>
-// import { loadStripe } from '@stripe/stripe-js';
-// // import { stripePromise } from 'path-to-your-stripe-setup';
+import server from '@/api/server.js';
+import { loadStripe } from '@stripe/stripe-js';
+import axios from 'axios';
 
-// const stripePromise = loadStripe('pk_test_51NFx8UCZLeYHIRWQD5wraSZd0DOFvRPo5nbFlK8vo9W6SYAEVFuYCTOAJ13d6eYCm95VCPCrpYsrbZkkx9CqabDs00FGdg4K9x');
+// Your Stripe publishable key
 
-// const handleSubmit = async () => {
-//   const stripe = await stripePromise;
-//   const { error } = await stripe.redirectToCheckout({
-//     lineItems: [{ price: 'price_1NFxHsCZLeYHIRWQDHahhDKF', quantity: 1 }],
-//     mode: 'payment',
-//     successUrl: 'https://your-domain.com/success',
-//     cancelUrl: 'https://your-domain.com/cancel',
-//   });
 
-//   if (error) {
-//     // Handle error
-//     console.log(error);
-//   }
-// };
+
 
 </script>
 
@@ -64,16 +53,12 @@
       Clear cart
     </button>
     <!-- checkout button -->
-    <button @click="checkoutTest">
+    <button @click="handleSubmit">
       Betalen
     </button>
   </div>
 </template>
 <script>
-import server from '@/api/server.js';
-import api from '@/api/api.js';
-import { loadStripe } from '@stripe/stripe-js'
-
 export default {
   name: 'CartView',
   data() {
@@ -97,8 +82,6 @@ export default {
     } catch (error) {
       console.log(error);
     }
-
-    
   },
 
   methods: {
@@ -114,49 +97,25 @@ export default {
           console.log(error);
         });
     },
-
-    checkout() {
-      server
-        .post('/cart/PayTest')
-        .then((response) => {
-          console.log(response);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    },
-
-    testMeth() {
-      const response = api.get( "/strapi-stripe/getProduct/1" )
-      console.log(response);
-    },
-
-    async cartToStripe() {
+    async handleSubmit() {
       try {
-        const response = await server.get('/cart/SetItemsForStripe');
-        return response.data.items;
+        const response = await server.post('/payment/makeData', {
+          cart: this.cart,
+          amount: this.cartTotal,
+          currency: 'eur', // Replace 'usd' with your preferred currency code
+        });
+
+        const { data } = response;
+        console.log(data);
+
+        // Redirect to the payment link received from the backend
+        // window.location.href = data.paymentLink;
       } catch (error) {
-        console.log(error);
+        console.error(error);
+        // Handle error if needed
       }
     },
 
-    async checkoutTest() {
-      const rawLineItems = await this.cartToStripe();
-      console.log(rawLineItems);
-
-      try {
-        const stripe = await loadStripe('pk_test_51NFx8UCZLeYHIRWQD5wraSZd0DOFvRPo5nbFlK8vo9W6SYAEVFuYCTOAJ13d6eYCm95VCPCrpYsrbZkkx9CqabDs00FGdg4K9x');
-        await stripe.redirectToCheckout({
-          lineItems: rawLineItems,
-          mode: 'payment',
-          successUrl: 'http://localhost:8080/success',
-          cancelUrl: 'http://localhost:8080/cancel',
-        });
-            
-      } catch (error) {
-        console.log(error);
-      }
-    }
   },
 }
 </script>

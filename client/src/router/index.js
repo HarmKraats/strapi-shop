@@ -12,11 +12,11 @@ const routes = [
   //   name: 'over',
   //   component: () => import('../views/AboutView.vue')
   // },
-  // {
-  //   path: '/shop',
-  //   name: 'shop',
-  //   component: () => import('../views/ProductsView.vue')
-  // },
+  {
+    path: '/shop',
+    name: 'shop',
+    component: () => import('../views/ProductsView.vue')
+  },
   {
     path: '/shop/:slug',
     name: 'productDetails',
