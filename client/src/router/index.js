@@ -39,11 +39,11 @@ const routes = [
     component: () => import('../views/CartView.vue')
   },
 
-  // {
-  //   path: '/checkout',
-  //   name: 'checkout',
-  //   component: () => import('../views/CheckoutView.vue')
-  // },
+  {
+    path: '/checkout',
+    name: 'checkout',
+    component: () => import('../views/CheckoutView.vue')
+  },
 
   // success page
   {

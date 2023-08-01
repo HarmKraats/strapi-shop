@@ -1,13 +1,5 @@
 <script setup>
 import server from '@/api/server.js';
-import { loadStripe } from '@stripe/stripe-js';
-import axios from 'axios';
-
-// Your Stripe publishable key
-
-
-
-
 </script>
 
 <template>
@@ -20,16 +12,14 @@ import axios from 'axios';
       <p>
         Klik <router-link to="/shop">hier</router-link> om naar de shop te gaan.
       </p>
-      <!-- link to shop page -->
-
     </div>
     <table class="cart-table" v-if="cartTotal > 0">
       <thead>
         <tr>
           <th>Product</th>
-          <th>Quantity</th>
-          <th>Price</th>
-          <th>Total</th>
+          <th>Aantal</th>
+          <th>Prijs</th>
+          <th>Totaal</th>
         </tr>
       </thead>
       <tbody>
@@ -53,9 +43,9 @@ import axios from 'axios';
       Clear cart
     </button>
     <!-- checkout button -->
-    <button @click="handleSubmit">
-      Betalen
-    </button>
+
+      <router-link to="/checkout">Naar checkout</router-link>
+
   </div>
 </template>
 <script>
@@ -108,14 +98,14 @@ export default {
         const { data } = response;
         console.log(data);
 
-        // Redirect to the payment link received from the backend
-        // window.location.href = data.paymentLink;
+        // Redirect to the payment link received from the backend\
+        window.location.href = data.paymentLink;
+        this.clearCart();
       } catch (error) {
         console.error(error);
         // Handle error if needed
       }
     },
-
   },
 }
 </script>

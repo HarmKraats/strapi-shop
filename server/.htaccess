@@ -1,5 +1,5 @@
 RewriteEngine On
-RewriteBase /01-own/strapi-vue-2/server/
+RewriteBase /1-own-projects/strapi-shop/server/
 
 # Redirect all requests to index.php, preserving the original request URI
 RewriteCond %{REQUEST_FILENAME} !-f

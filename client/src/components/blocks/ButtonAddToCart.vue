@@ -92,14 +92,13 @@ export default {
             const formData = new FormData();
             formData.append('id', this.product_id);
             formData.append('quantity', this.selected_quantity);
-
             // add product to cart
             server.post('/cart/add', formData)
                 .then((response) => {
                     // this.product_quantity -= this.productQuantity
                     document.dispatchEvent(new Event('cartUpdated'));
                     // alert('Product is toegevoegd aan de winkelwagen')
-                    // console.log(response);
+                    console.log(response);
 
                 }).catch((error) => {
                     console.log(error)

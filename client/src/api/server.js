@@ -1,9 +1,9 @@
 import axios from "axios";
 
 const server = axios.create({
-    baseURL: 'http://localhost/01-own/strapi-vue-2/server/',
+    baseURL: `${process.env.VUE_APP_SERVER_API_URL}`,
     headers: {
-        Authorization: "Bearer BANANA"
+        Authorization:`Bearer ${process.env.VUE_APP_SERVER_API_AUTH_TOKEN}`
       }
   });
 
