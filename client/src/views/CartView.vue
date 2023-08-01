@@ -3,7 +3,7 @@ import server from '@/api/server.js';
 </script>
 
 <template>
-  <div>
+  <div class="container">
     <h2>Mandje</h2>
     <div v-if="cartTotal <= 0">
       <p>
@@ -100,7 +100,7 @@ export default {
 
         // Redirect to the payment link received from the backend\
         window.location.href = data.paymentLink;
-        this.clearCart();
+        // this.clearCart();
       } catch (error) {
         console.error(error);
         // Handle error if needed

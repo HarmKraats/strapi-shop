@@ -4,7 +4,7 @@ import server from '@/api/server.js';
 
 <template>
     <div>
-        <h2>Mandje</h2>
+
         <div v-if="cartTotal <= 0">
             <p>
                 Er zit helemaal niks in je mandje.. Hoe ben je hier gekomen?
@@ -15,79 +15,66 @@ import server from '@/api/server.js';
             </p>
         </div>
         <div class="wrapper">
-            <table class="cart-table" v-if="cartTotal > 0">
-                <thead>
-                    <tr>
-                        <th>Product</th>
-                        <th>Aantal</th>
-                        <th>Prijs</th>
-                        <th>Totaal</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr v-for="item in cart" :key="item.id">
-                        <td>{{ item.productName }}</td>
-                        <td>{{ item.quantity }}</td>
-                        <td>&euro; {{ item.price }}</td>
-                        <td>&euro; {{ item.price * item.quantity }}</td>
-                    </tr>
-                </tbody>
-                <tfoot>
-                    <tr>
-                        <td colspan="4" class="cart-total">
-                            <strong>Total: &euro; {{ cartTotal }}</strong>
-                        </td>
-                    </tr>
-                </tfoot>
-            </table>
+            <div class="table">
+                <h2>Mandje</h2>
+                <table class="cart-table" v-if="cartTotal > 0">
+                    <thead>
+                        <tr>
+                            <th>Product</th>
+                            <th>Aantal</th>
+                            <th>Prijs</th>
+                            <th>Totaal</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="item in cart" :key="item.id">
+                            <td>{{ item.productName }}</td>
+                            <td>{{ item.quantity }}</td>
+                            <td>&euro; {{ item.price }}</td>
+                            <td>&euro; {{ item.price * item.quantity }}</td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="4" class="cart-total">
+                                <strong>Total: &euro; {{ cartTotal }}</strong>
+                            </td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
             <div class="payment-info">
-                <!-- form with adress fields ect NAW gegevens-->
+                <h2>Adresgegevens</h2>
                 <form @submit.prevent="handleSubmit">
-                    <div class="field-wrapper">
+                    <div class="input-wrapper">
                         <label for="name">Naam</label>
-                        <input type="text" id="name" name="name" placeholder="John Doe" required />
+                        <input placeholder="John Doe" type="text" id="name"
+                            v-model="addressData.name" required />
                     </div>
-
-                    <div class="field-wrapper">
-                        <label for="email">Email</label>
-                        <input type="email" id="email" name="email" required />
-                    </div>
-                    
-                    <div class="field-wrapper">
+                    <div class="input-wrapper">
                         <label for="address">Adres</label>
-                        <input type="text" id="address" name="address" required />
-                    </div>
+                        <input placeholder="Entrada" type="text" id="address"
+                            v-model="addressData.address" required />
 
-                    <div class="field-wrapper">
-                        <label for="city">Stad</label>
-                        <input type="text" id="city" name="city" required />
                     </div>
+                    <div class="input-wrapper">
+                        <label for="zipcode">Postcode</label>
+                        <input placeholder="1114AA" type="text" id="zipcode"
+                            v-model="addressData.zipcode" required />
 
-                    <div class="field-wrapper">
-                        <label for="zip">Postcode</label>
-                        <input type="text" id="zip" name="zip" required />
                     </div>
-
-                    <div class="field-wrapper">
+                    <div class="input-wrapper">
+                        <label for="city">Plaats</label>
+                        <input placeholder="Amsterdam" type="text" id="city"
+                            v-model="addressData.city" required />
+                    </div>
+                    <div class="input-wrapper">
                         <label for="country">Land</label>
-                        <input type="text" id="country" name="country" required />
+                        <input placeholder="Nederland" type="text" id="country"
+                            v-model="addressData.country" required />
                     </div>
-
-                    <div class="field-wrapper">
-                        <label for="phone">Telefoonnummer</label>
-                        <input type="text" id="phone" name="phone" required />
-                    </div>
-
-                    <div class="field-wrapper">
-                        <label for="card">Kaartnummer</label>
-                        <input type="text" id="card" name="card" required />
-                    </div>
-
-
-
-                    <button type="submit">Betalen</button>
+                    <button type="submit">Naar betalen</button>
                 </form>
-
             </div>
         </div>
     </div>
@@ -99,6 +86,13 @@ export default {
         return {
             cart: null,
             cartTotal: 0,
+            addressData: {
+                name: '',
+                address: '',
+                zipcode: '',
+                city: '',
+                country: '',
+            },
         }
     },
 
@@ -133,7 +127,7 @@ export default {
         },
         async handleSubmit() {
             try {
-                const response = await server.post('/payment/makeData', {
+                const response = await server.post('/payment/makeOrder', {
                     cart: this.cart,
                     amount: this.cartTotal,
                     currency: 'eur', // Replace 'usd' with your preferred currency code
@@ -143,8 +137,8 @@ export default {
                 console.log(data);
 
                 // Redirect to the payment link received from the backend\
-                window.location.href = data.paymentLink;
-                this.clearCart();
+                // window.location.href = data.paymentLink;
+                // this.clearCart();
             } catch (error) {
                 console.error(error);
                 // Handle error if needed
@@ -156,7 +150,17 @@ export default {
 <style lang="scss">
 .wrapper {
     display: flex;
+    flex-direction: row-reverse;
+    width: var(--container-width);
+    gap: 10rem;
+
+    .table,
+    .payment-info {
+        width: 50%;
+    }
 }
+
+
 
 
 
@@ -187,5 +191,33 @@ export default {
 
 button {
     margin-top: 16px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+
+    .input-wrapper {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 16px;
+
+        label {
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        input {
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+
+            &:focus {
+                outline: none;
+                border-color: var(--primary-color);
+            }
+        }
+    }
 }
 </style>

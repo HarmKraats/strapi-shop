@@ -27,6 +27,13 @@ import strapiService from './api/strapiService';
     </div>
   </nav>
 
+  <header>
+    <div class="container">
+      <h1>Clayco</h1>
+      <p>Met liefde & zorg handgemaakt</p>
+    </div>
+  </header>
+
   <router-view />
 
   <footer class="footer">
@@ -140,6 +147,8 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
+  min-height: 100vh;
+  position: relative;
 }
 
 .container {
@@ -173,6 +182,10 @@ button {
   &:hover {
     background-color: var(--main-color-dark);
   }
+}
+
+h2 {
+  margin-bottom: 2rem;
 }
 
 nav {
@@ -217,10 +230,41 @@ nav {
     }
 
   }
+}
 
+header {
+  width: 100%;
+  height: 30vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--main-color);
+  color: var(--color-white);
+  font-family: 'IBM Plex Serif', serif;
+  font-size: 2rem;
+  font-weight: 400;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  text-shadow: 0 0 5px rgba(0, 0, 0, .5);
+
+  h1 {
+    font-size: 4rem;
+    font-weight: 700;
+    text-shadow: 0 0 5px rgba(0, 0, 0, .5);
+  }
+
+  p {
+    font-size: 1.5rem;
+    font-weight: 400;
+    text-shadow: 0 0 5px rgba(0, 0, 0, .5);
+  }
+
+  margin-bottom: 5rem;
 }
 
 footer {
+
   width: 100%;
   margin-top: 5rem;
   padding: 2rem 0;

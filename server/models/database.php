@@ -49,33 +49,43 @@ function getFromDB($what = "*", $table = "users", $where = "1", $debug = false)
     }
 }
 
-// postToDB function
-function postToDB($what = "*", $table = "users", $where = "1", $debug = false)
+function postToDB($data, $table = "users", $where = "1", $debug = false)
 {
     try {
         $db = getDB();
 
-        // If the $what is an array, we need to implode it with a comma.
-        if (is_array($what)) {
-            $what = implode(', ', $what);
+        // If the $data is an array, we need to build the SET clause for the SQL query.
+        if (is_array($data)) {
+            $columns = implode(', ', array_keys($data));
+            $placeholders = ':' . implode(', :', array_keys($data));
+        } else {
+            throw new Exception('$data should be an associative array.');
         }
 
+        $sql = "INSERT INTO $table ($columns) VALUES ($placeholders)";
+
         // query
-        $sql = "INSERT INTO $table SET $what";
+
         if ($debug) {
             echo $sql;
         }
 
-        // prepare and execute query. Then fetch all the results and retype them as an array
+        // prepare and execute query with the data array
         $stmt = $db->prepare($sql);
-        $stmt->execute();
-        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $stmt->execute($data);
 
-        return $result;
+        // Return the last inserted ID after a successful INSERT operation.
+        return $db->lastInsertId();
     } catch (PDOException $e) {
-        echo 'Database gegevens ophalen error: ' . $e->getMessage();
+        echo 'Fout met gegevens opslaan in database: ' . $e->getMessage();
+        return false;
+    } catch (Exception $e) {
+        echo 'Error: ' . $e->getMessage();
+        return false;
     }
 }
+
+
 
 /**
  * INSERT INTO products
