@@ -1,9 +1,11 @@
 <script setup>
 import ShoppingCart from "@/components/blocks/ShoppingCart.vue";
 import strapiService from "./api/strapiService";
+import Loader from "@/components/Loader.vue";
 </script>
 
 <template>
+  <Loader />
   <nav :class="{ scrolled: showFullNav }">
     <div class="container">
       <div class="logo">
@@ -26,13 +28,6 @@ import strapiService from "./api/strapiService";
       </div>
     </div>
   </nav>
-
-  <!-- <header>
-    <div class="container">
-      <h1>Clayco</h1>
-      <p>Met liefde & zorg handgemaakt</p>
-    </div>
-  </header> -->
 
   <router-view />
 
@@ -59,6 +54,7 @@ export default {
 
   components: {
     ShoppingCart,
+    Loader,
   },
 
   mounted() {
@@ -99,6 +95,7 @@ export default {
   },
 };
 </script>
+
 
 <style lang="scss">
 @import url("https://fonts.googleapis.com/css2?family=Baskervville:ital@0;1&family=IBM+Plex+Serif:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap");
