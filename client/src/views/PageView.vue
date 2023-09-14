@@ -18,7 +18,7 @@ import Pagebuilder from "@/components/templates/Pagebuilder.vue";
 
   <Shop v-else-if="template == 'Shop page'" :page="page" />
 
-  <h1 v-else v-if="pageLoaded">404</h1>
+  <h1 v-else >404</h1>
 </template>
 
 <script>
@@ -37,8 +37,6 @@ export default {
   },
   methods: {
     fetchPage() {
-      this.pageLoaded = false;
-      this.pageIsLoading = true;
       this.pageSlug = this.$route.params.slug;
       strapiService
         .getPageBySlug(this.pageSlug)
@@ -47,8 +45,7 @@ export default {
           this.pageId = page.id;
           this.template = this.page.Template;
         })
-        .finally(() => {
-        });
+        .finally(() => {});
     },
   },
   watch: {
@@ -102,6 +99,4 @@ header {
     bottom: 50px;
   }
 }
-
-
 </style>
