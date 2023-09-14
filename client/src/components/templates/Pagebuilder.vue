@@ -88,10 +88,6 @@ export default {
             return componentMapping[component] || 'div';
         },
     },
-    created() {
-        // log the page object
-        console.log(this.page);
-    },
     computed: {
         isConsecutiveTextImage() {
             return this.page.Pagebuilder.map((component, index) => {

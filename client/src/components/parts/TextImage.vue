@@ -46,13 +46,8 @@ export default {
             imagePosition: this.data.View,
         };
     },
-    mounted() {
-        // console.log(this.data)
-        console.log(this.imagePosition);
-    },
     methods: {
         getImagePos() {
-            console.log(this.imagePosition)
             if (this.imagePosition === 'Plaatje links') {
                 return false;
             } else {

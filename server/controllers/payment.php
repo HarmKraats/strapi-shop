@@ -59,22 +59,22 @@ function paymentsendOrderAction($requestData)
     ini_set('display_errors', 1);
     error_reporting(E_ALL);
 
-    $to_email = "harmkraats@gmail.com";
-    $subject = "Simple Email Testing via PHP";
-    $body = "Hello,nn It is a testing email sent by PHP Script";
-    $headers = "From: sender\'s email";
+    // $to_email = "harmkraats@gmail.com";
+    // $subject = "Simple Email Testing via PHP";
+    // $body = "Hello,nn It is a testing email sent by PHP Script";
+    // $headers = "From: sender\'s email";
     
-    // make the make to try catch
-    try {
-        if(mail($to_email, $subject, $body, $headers)){
-            echo "Email successfully sent to $to_email...";
-        } else {
-            echo "Email sending failed...";
-        }
-        echo "Email successfully sent to $to_email...";
-    } catch (\Throwable $th) {
-        echo "Email sending failed...";
-    }
+    // // make the make to try catch
+    // try {
+    //     if(mail($to_email, $subject, $body, $headers)){
+    //         echo "Email successfully sent to $to_email...";
+    //     } else {
+    //         echo "Email sending failed...";
+    //     }
+    //     echo "Email successfully sent to $to_email...";
+    // } catch (\Throwable $th) {
+    //     echo "Email sending failed...";
+    // }
 
 
 

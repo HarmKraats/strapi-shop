@@ -28,7 +28,6 @@ export default {
 
     created() {
         this.alignment = this.data.Size;
-        console.log(this.getAlignment());
     },
 
     methods: {

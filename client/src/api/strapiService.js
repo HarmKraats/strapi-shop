@@ -10,7 +10,7 @@ export default {
 
     getPageBySlug(slug) {
         return api
-        .get(`/api/pages?filters[slug][$eq]=${slug}&populate[Pagebuilder][populate]=*`)
+        .get(`/api/pages?filters[Slug][$eq]=${slug}&populate[Pagebuilder][populate]=*`)
             .then(response => response.data.data[0]);
     },
     getMenuItems() {

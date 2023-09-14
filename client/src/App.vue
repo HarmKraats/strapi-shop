@@ -1,22 +1,22 @@
-<script setup >
-import ShoppingCart from '@/components/blocks/ShoppingCart.vue';
-import strapiService from './api/strapiService';
-
-
+<script setup>
+import ShoppingCart from "@/components/blocks/ShoppingCart.vue";
+import strapiService from "./api/strapiService";
 </script>
 
 <template>
-  <nav :class="{ 'scrolled': showFullNav }">
+  <nav :class="{ scrolled: showFullNav }">
     <div class="container">
       <div class="logo">
         <router-link to="/">
           <img src="@/assets/logo.svg" alt="logo" />
         </router-link>
-
       </div>
       <div class="links">
-        <router-link v-for="menuItem in menuItems" :key="menuItem.id"
-          :to="menuItem.attributes.Slug">
+        <router-link
+          v-for="menuItem in menuItems"
+          :key="menuItem.id"
+          :to="'/' + menuItem.attributes.Slug"
+        >
           {{ menuItem.attributes.Title }}
         </router-link>
 
@@ -27,12 +27,12 @@ import strapiService from './api/strapiService';
     </div>
   </nav>
 
-  <header>
+  <!-- <header>
     <div class="container">
       <h1>Clayco</h1>
       <p>Met liefde & zorg handgemaakt</p>
     </div>
-  </header>
+  </header> -->
 
   <router-view />
 
@@ -46,17 +46,15 @@ import strapiService from './api/strapiService';
 </template>
 
 <script>
-
-
 export default {
-  name: 'App',
+  name: "App",
 
   data() {
     return {
       showFullNav: false,
       scrollPosition: 0,
       menuItems: [],
-    }
+    };
   },
 
   components: {
@@ -65,18 +63,17 @@ export default {
 
   mounted() {
     // Fetch API response using strapiService
-    strapiService.getMenuItems().then(response => {
-      const menuItems = response.map(page => ({
+    strapiService.getMenuItems().then((response) => {
+      const menuItems = response.map((page) => ({
         id: page.id,
         attributes: {
           Title: page.MenuItemTitle,
-          Slug: page.page.data.attributes.Slug
-        }
+          Slug: page.page.data.attributes.Slug,
+        },
       }));
       this.menuItems = menuItems;
     });
   },
-
 
   created() {
     window.addEventListener("scroll", this.handleScroll);
@@ -94,31 +91,27 @@ export default {
         this.showFullNav = true;
       }
       this.scrollPosition = currentScrollPosition;
-    }
+    },
   },
 
   destroyed() {
     window.removeEventListener("scroll", this.handleScroll);
   },
-}
-
+};
 </script>
 
 <style lang="scss">
-@import url('https://fonts.googleapis.com/css2?family=Baskervville:ital@0;1&family=IBM+Plex+Serif:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap');
-
-
+@import url("https://fonts.googleapis.com/css2?family=Baskervville:ital@0;1&family=IBM+Plex+Serif:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap");
 
 :root {
   --container-width: 70vw;
   --section-spacing: 5rem;
 
-  --main-color: #A0B8A5;
+  --main-color: #a0b8a5;
   --color-white: #fff;
   --main-color-dark: #76897a;
 
   --color-black: #1e1e1e;
-
 }
 
 main {
@@ -132,7 +125,7 @@ main {
 
 body {
   line-height: 1.5;
-  background-color: #F8F7F5;
+  background-color: #f8f7f5;
   // font-family: 'Baskervville', serif;
   margin: 0;
   overflow-x: hidden;
@@ -149,6 +142,7 @@ body {
   align-items: center;
   min-height: 100vh;
   position: relative;
+  overflow: hidden;
 }
 
 .container {
@@ -159,7 +153,7 @@ body {
 a {
   text-decoration: none;
   color: var(--main-color);
-  transition: .2s;
+  transition: 0.2s;
 
   &:hover {
     color: var(--main-color-dark);
@@ -174,9 +168,9 @@ button {
   color: #fff;
   font-size: 1rem;
   font-weight: 500;
-  padding: .7rem;
+  padding: 0.7rem;
   cursor: pointer;
-  transition: all .2s ease-in-out;
+  transition: all 0.2s ease-in-out;
   background-color: var(--main-color);
 
   &:hover {
@@ -191,7 +185,8 @@ h2 {
 nav {
   z-index: 10;
   width: 100%;
-  transition: background-color .3s ease-in-out, padding .2s ease-in-out, font-weight 0s ease-in-out;
+  transition: background-color 0.3s ease-in-out, padding 0.2s ease-in-out,
+    font-weight 0s ease-in-out;
   padding: 2rem 0;
 
   &.scrolled {
@@ -202,7 +197,7 @@ nav {
   }
 
   .container {
-    font-family: 'IBM Plex Serif', serif;
+    font-family: "IBM Plex Serif", serif;
     display: flex;
     justify-content: space-between;
   }
@@ -212,7 +207,6 @@ nav {
       width: 8rem;
     }
   }
-
 
   .links {
     display: flex;
@@ -228,7 +222,6 @@ nav {
       gap: 5px;
       align-items: center;
     }
-
   }
 }
 
@@ -240,31 +233,30 @@ header {
   align-items: center;
   background-color: var(--main-color);
   color: var(--color-white);
-  font-family: 'IBM Plex Serif', serif;
+  font-family: "IBM Plex Serif", serif;
   font-size: 2rem;
   font-weight: 400;
   text-align: center;
   text-transform: uppercase;
   letter-spacing: 2px;
-  text-shadow: 0 0 5px rgba(0, 0, 0, .5);
+  text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
 
   h1 {
     font-size: 4rem;
     font-weight: 700;
-    text-shadow: 0 0 5px rgba(0, 0, 0, .5);
+    text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
   }
 
   p {
     font-size: 1.5rem;
     font-weight: 400;
-    text-shadow: 0 0 5px rgba(0, 0, 0, .5);
+    text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
   }
 
   margin-bottom: 5rem;
 }
 
 footer {
-
   width: 100%;
   margin-top: 5rem;
   padding: 2rem 0;

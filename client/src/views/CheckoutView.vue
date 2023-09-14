@@ -137,7 +137,7 @@ export default {
                 console.log(data);
 
                 // Redirect to the payment link received from the backend\
-                // window.location.href = data.paymentLink;
+                //window.location.href = data.paymentLink;
                 // this.clearCart();
             } catch (error) {
                 console.error(error);

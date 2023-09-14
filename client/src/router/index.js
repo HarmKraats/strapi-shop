@@ -59,11 +59,15 @@ const routes = [
 
 
 
+
+
+  // Dunamic router for all page slugs on the / and not when on lets say /shop
   {
-    path: '/:slug', // Dynamic route for all page slugs
+    path: '/:slug',
     name: 'page',
     component: () => import('../views/PageView.vue')
   },
+  
 
   {
     path: '/:pathMatch(.*)*',
