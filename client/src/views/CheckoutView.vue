@@ -136,9 +136,8 @@ export default {
                 const { data } = response;
                 console.log(data);
 
-                // Redirect to the payment link received from the backend\
-                //window.location.href = data.paymentLink;
-                // this.clearCart();
+                window.location.href = data.paymentLink;
+                // this.clearCart(); // Enable this on production
             } catch (error) {
                 console.error(error);
                 // Handle error if needed

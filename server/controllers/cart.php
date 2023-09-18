@@ -48,12 +48,12 @@ function cartItemsAction()
 // Controller file (e.g., cart.php)
 function cartAddAction()
 {
-
+    global $strapi_database;
     // Access the data sent with the POST request
     $id = $_POST['id'] ?? 2;
     $quantity = $_POST['quantity'] ?? 6;
 
-    $product = getFromDB('*', 'products', 'id = ' . $id)[0];
+    $product = $strapi_database->getFromDB('*', 'products', 'id = ' . $id)[0];
 
     $cartItem = [
         'id' => $id,

@@ -5,30 +5,10 @@ require_once('models/database.php');
 function paymentsendOrderAction($requestData)
 {
 
-    /**
-     * $requestData has the following
-     * {
-            "cart": [
-                {
-                    "id": "6",
-                    "quantity": 2,
-                    "productName": "Test product",
-                    "price": "3123.00"
-                },
-                {
-                    "id": "5",
-                    "quantity": "1",
-                    "productName": "Test product",
-                    "price": "22.00"
-                }
-            ],
-            "amount": 6268,
-            "currency": "eur"
-        }
-     */
+    global $orders_database;
 
     //  add a new order in the database
-    $order = postToDB(
+    $order = $orders_database->postToDB(
         [
             'order_amount' => $requestData['amount'],
             'order_currency' => $requestData['currency'],
@@ -44,7 +24,7 @@ function paymentsendOrderAction($requestData)
 
     // add all the products to the order
     foreach ($requestData['cart'] as $item) {
-        postToDB(
+        $orders_database->postToDB(
             [
                 'order_id' => $order, // Use the order ID obtained from the previous insertion
                 'product_id' => $item['id'],
@@ -58,26 +38,6 @@ function paymentsendOrderAction($requestData)
 
     ini_set('display_errors', 1);
     error_reporting(E_ALL);
-
-    // $to_email = "harmkraats@gmail.com";
-    // $subject = "Simple Email Testing via PHP";
-    // $body = "Hello,nn It is a testing email sent by PHP Script";
-    // $headers = "From: sender\'s email";
-    
-    // // make the make to try catch
-    // try {
-    //     if(mail($to_email, $subject, $body, $headers)){
-    //         echo "Email successfully sent to $to_email...";
-    //     } else {
-    //         echo "Email sending failed...";
-    //     }
-    //     echo "Email successfully sent to $to_email...";
-    // } catch (\Throwable $th) {
-    //     echo "Email sending failed...";
-    // }
-
-
-
 
     return $order;
 }

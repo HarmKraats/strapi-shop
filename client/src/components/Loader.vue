@@ -18,6 +18,11 @@ export default {
       window.addEventListener('load', this.pageLoaded);
     });
   },
+  beforeRouteUpdate(to, from, next) {
+    this.isPageLoaded = false;
+    this.pageFullLoaded = false;
+    next();
+  },
   methods: {
     pageLoaded() {
       setTimeout(() => {
