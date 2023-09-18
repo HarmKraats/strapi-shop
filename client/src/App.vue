@@ -96,7 +96,6 @@ export default {
 };
 </script>
 
-
 <style lang="scss">
 @import url("https://fonts.googleapis.com/css2?family=Baskervville:ital@0;1&family=IBM+Plex+Serif:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap");
 
@@ -109,6 +108,8 @@ export default {
   --main-color-dark: #76897a;
 
   --color-black: #1e1e1e;
+
+  --font-family: Avenir, Helvetica, Arial, sans-serif;
 }
 
 main {
@@ -129,7 +130,7 @@ body {
 }
 
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-family: var(--font-family);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
@@ -177,10 +178,10 @@ button,
   }
 }
 
-.space-top{
+.space-top {
   margin-top: 5rem;
 }
-.space-bottom{
+.space-bottom {
   margin-bottom: 5rem;
 }
 

@@ -20,7 +20,7 @@ function cartTotalAction()
     return ['total' => $total];
 }
 
-function carttotalItemsAction()
+function cartTotalItemsAction()
 {
     // get the total number of items in the cart
     $cartItems = isset($_SESSION['cart']) ? $_SESSION['cart'] : [];

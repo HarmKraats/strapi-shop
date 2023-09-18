@@ -3,126 +3,151 @@ import server from "@/api/server.js";
 </script>
 
 <template>
-  <div>
-    <div v-if="cartTotal <= 0">
-      <p>Er zit helemaal niks in je mandje.. Hoe ben je hier gekomen?</p>
-      <p>
-        Klik <router-link to="/cart">hier</router-link> om je mandje te
-        bekijken.
-      </p>
-    </div>
-    <div class="wrapper">
-      <div class="table">
-        <h2>Mandje</h2>
-        <table class="cart-table" v-if="cartTotal > 0">
-          <thead>
-            <tr>
-              <th>Product</th>
-              <th>Aantal</th>
-              <th>Prijs</th>
-              <th>Totaal</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="item in cart" :key="item.id">
-              <td>{{ item.productName }}</td>
-              <td>{{ item.quantity }}</td>
-              <td>&euro; {{ item.price }}</td>
-              <td>&euro; {{ item.price * item.quantity }}</td>
-            </tr>
-          </tbody>
-          <tfoot>
-            <tr>
-              <td colspan="4" class="cart-total">
-                <strong>Total: &euro; {{ cartTotal }}</strong>
-              </td>
-            </tr>
-          </tfoot>
-        </table>
+  <div class="wrapper">
+    <div class="data">
+      <!-- Naam, E-mailadres, Telefoonnummer, Adres, (Plaats, Postcode (Naast elkaar)), Land, Knop naar afrekenen -->
+      <h2>Gegevens</h2>
 
-
-      </div>
-
-      <div class="payment-info">
-        <h2>Gegevens</h2>
+      <div class="data-wrapper">
         <form @submit.prevent="handleSubmit">
+          <!-- input text fields here -->
           <div class="input-wrapper">
             <label for="name">Naam</label>
             <input
-              placeholder="John Doe"
               type="text"
               id="name"
               v-model="addressData.name"
+              placeholder="Harm van de Kraats"
               required
             />
           </div>
           <div class="input-wrapper">
-            <label for="name">Emailadres</label>
+            <label for="email">E-mailadres</label>
             <input
-              placeholder="johndoe@gmail.com"
               type="email"
               id="email"
               v-model="addressData.email"
+              placeholder="contact@harmvandekraats.nl"
               required
             />
           </div>
           <div class="input-wrapper">
-            <label for="name">Telefoonnummer</label>
+            <label for="phone">Telefoonnummer</label>
             <input
-              placeholder="06 12345678"
-              type="text"
+              type="tel"
               id="phone"
               v-model="addressData.phone"
+              placeholder="06 12345678"
               required
             />
           </div>
-
           <div class="input-wrapper">
             <label for="address">Adres</label>
             <input
-              placeholder="Entrada"
               type="text"
               id="address"
               v-model="addressData.address"
+              placeholder="Straatnaam 123"
               required
             />
           </div>
-          <div class="input-wrapper">
-            <label for="zipcode">Postcode</label>
-            <input
-              placeholder="1114AA"
-              type="text"
-              id="zipcode"
-              v-model="addressData.zipcode"
-              required
-            />
-          </div>
-          <div class="input-wrapper">
-            <label for="city">Plaats</label>
-            <input
-              placeholder="Amsterdam"
-              type="text"
-              id="city"
-              v-model="addressData.city"
-              required
-            />
+          <div class="inner-wrapper">
+            <div class="input-wrapper">
+              <label for="zipcode">Postcode</label>
+              <input
+                type="text"
+                id="zipcode"
+                v-model="addressData.zipcode"
+                placeholder="1234 AB"
+                required
+              />
+            </div>
+
+            <div class="input-wrapper">
+              <label for="city">Plaats</label>
+              <input
+                type="text"
+                id="city"
+                v-model="addressData.city"
+                placeholder="Amsterdam"
+                required
+              />
+            </div>
           </div>
           <div class="input-wrapper">
             <label for="country">Land</label>
             <input
-              placeholder="Nederland"
               type="text"
               id="country"
               v-model="addressData.country"
+              placeholder="Nederland"
               required
             />
           </div>
-          <button type="submit">Naar betalen</button>
+
+          <button class="main-button" type="submit">Afrekenen</button>
         </form>
       </div>
     </div>
+
+    <div class="cart">
+      <section>
+        <h2>Jouw winkelmandje</h2>
+        <div v-if="cartTotalItems <= 0">
+          <p>Je hebt nog geen producten in je mandje.</p>
+          <p>
+            Klik <router-link to="/shop">hier</router-link> om naar de shop te
+            gaan.
+          </p>
+        </div>
+
+        <!-- cart table -->
+        <div class="cart-table" v-if="cartTotalItems > 0">
+          <div class="table-head">
+            <ul>
+              <li class="col">Product</li>
+              <li class="col">Aantal</li>
+              <li class="col">Prijs</li>
+              <li class="col">Totaal</li>
+            </ul>
+          </div>
+          <div class="table-body">
+            <ul class="items" v-for="item in cart" :key="item.id">
+              <li>{{ item.productName }}</li>
+              <li>{{ item.quantity }}</li>
+              <li>{{ item.price }}</li>
+              <li>{{ item.price * item.quantity }}</li>
+            </ul>
+            <ul>
+              <li>Verzendkosten</li>
+              <li></li>
+              <li></li>
+              <li>{{ 4.15 }}</li>
+            </ul>
+            <ul class="total">
+              <li>TotaalBedrag</li>
+              <li></li>
+              <li></li>
+              <li>{{ this.cartTotal }}</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="extra">
+        <h2>Extra</h2>
+        <!-- large opmerkingen text veld -->
+        
+        <div class="input-wrapper">
+          <label for="commentary">Opmerkingen</label>
+          <textarea name="commentary" id="opmerkingen" ></textarea>
+
+          </div>
+      </section>
+    </div>
   </div>
 </template>
+
 <script>
 export default {
   name: "CartView",
@@ -130,6 +155,7 @@ export default {
     return {
       cart: null,
       cartTotal: 0,
+      cartTotalItems: 0,
       addressData: {
         name: "",
         email: "",
@@ -146,6 +172,7 @@ export default {
     try {
       const response = await server.get("/cart/items");
       this.cart = response.data.items;
+      console.log(this.cart);
     } catch (error) {
       console.log(error);
     }
@@ -153,6 +180,13 @@ export default {
     try {
       const response = await server.get("/cart/Total");
       this.cartTotal = response.data.total;
+    } catch (error) {
+      console.log(error);
+    }
+
+    try {
+      const response = await server.get("/cart/TotalItems");
+      this.cartTotalItems = response.data.totalItems;
     } catch (error) {
       console.log(error);
     }
@@ -192,72 +226,112 @@ export default {
   },
 };
 </script>
+
 <style lang="scss">
 .wrapper {
-  display: flex;
-  flex-direction: row-reverse;
-  width: var(--container-width);
-  gap: 10rem;
-
-  .table,
-  .payment-info {
-    width: 50%;
-  }
-}
-
-.cart-table {
-  width: 100%;
-  border-collapse: collapse;
-
-  th,
-  td {
-    padding: 8px;
-    text-align: left;
-    border-bottom: 1px solid #ccc;
-  }
-
-  th {
-    background-color: #f2f2f2;
-  }
-
-  td {
-    vertical-align: middle;
-  }
-
-  .cart-total {
-    text-align: right;
-    font-weight: bold;
-  }
-}
-
-button {
-  margin-top: 16px;
-}
-
-form {
-  display: flex;
-  flex-direction: column;
+  font-size: 16px;
   text-align: left;
+  display: flex;
+  flex-direction: row;
+  width: var(--container-width);
+  gap: 10em;
+
+  > div {
+    flex-grow: 1;
+    min-width: 40%;
+  }
+
+  h2 {
+    font-size: 2em;
+    margin-bottom: 2em;
+  }
 
   .input-wrapper {
     display: flex;
     flex-direction: column;
-    margin-bottom: 16px;
+  }
 
-    label {
-      margin-bottom: 8px;
+  .inner-wrapper {
+    display: flex;
+    gap: 1em;
+
+    > div {
+      flex-grow: 1;
+    }
+  }
+
+  input {
+    margin-bottom: 1em;
+    padding: 0.5em;
+    border: none;
+    color: var(--color-black);
+    border-radius: 5px;
+    font-size: 1rem;
+  }
+
+  label {
+    margin-bottom: 0.5em;
+    font-weight: bold;
+  }
+
+  .cart-table {
+    margin-bottom: 2em;
+    display: flex;
+    flex-direction: column;
+    row-gap: 0.5em;
+
+    li {
+      width: 20%;
+      display: flex;
+      align-items: center;
+      list-style-type: none;
+    }
+
+    .table-head ul {
+      display: flex;
+      padding: 0 1em;
+      justify-content: space-between;
       font-weight: bold;
     }
 
-    input {
-      padding: 8px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
+    .table-body ul {
+      display: flex;
+      border-radius: 5px;
+      justify-content: space-between;
+      margin-bottom: 0.5em;
+      padding: 0 1em;
 
-      &:focus {
-        outline: none;
-        border-color: var(--primary-color);
+      &.items {
+        padding: 0.5rem 1em;
+        margin-bottom: 1em;
+        background-color: var(--color-white);
       }
+
+      &.total {
+        font-weight: bold;
+      }
+    }
+  }
+
+  .extra {
+    display: flex;
+    flex-direction: column;
+    h2 {
+      margin-bottom: 1em;
+
+    }
+    textarea {
+      font-family: var(--font-family);
+      margin-bottom: 1em;
+      padding: 0.5em;
+      border: none;
+      color: var(--color-black);
+      border-radius: 5px;
+      font-size: 1rem;
+      resize: vertical;
+      max-height: 300px;
+      min-height: 100px;
+
     }
   }
 }
