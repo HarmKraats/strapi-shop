@@ -5,7 +5,7 @@ import Loader from "@/components/Loader.vue";
 </script>
 
 <template>
-  <Loader />
+  <!-- <Loader /> -->
   <nav :class="{ scrolled: showFullNav }">
     <div class="container">
       <div class="logo">
@@ -157,8 +157,9 @@ a {
   }
 }
 
-button {
-  width: 100%;
+button,
+.main-button {
+  // width: 100%;
   height: 100%;
   border: none;
   border-radius: 5px;
@@ -172,7 +173,15 @@ button {
 
   &:hover {
     background-color: var(--main-color-dark);
+    color: var(--color-white);
   }
+}
+
+.space-top{
+  margin-top: 5rem;
+}
+.space-bottom{
+  margin-bottom: 5rem;
 }
 
 h2 {

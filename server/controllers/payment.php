@@ -35,10 +35,6 @@ function paymentsendOrderAction($requestData)
         );
     }
 
-
-    ini_set('display_errors', 1);
-    error_reporting(E_ALL);
-
     return $order;
 }
 
@@ -65,6 +61,19 @@ function paymentmakeDataAction($requestData)
 
         $summary[] = $item['productName'] . ' x ' . $item['quantity'];
     }
+
+    // add shipping costs to the order 4.15 euro
+    $line_items[] = [
+        'price_data' => [
+            'currency' => $requestData['currency'],
+            'product_data' => [
+                'name' => 'Verzendkosten via PostNL',
+            ],
+            'unit_amount' => round(4.15 * 100, 0),
+        ],
+        'quantity' => 1,
+    ];
+    
 
     $summary = implode(', ', $summary);
 
